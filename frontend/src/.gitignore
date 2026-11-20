@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+
+# Python backend (future)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache and testing
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Operating system files
+.DS_Store
+Thumbs.db
