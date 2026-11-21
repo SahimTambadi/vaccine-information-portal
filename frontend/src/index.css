@@ -1,6 +1,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* ==========================================
+   VAXCARE - GLOBAL STYLES
+========================================== */
+
 * {
   box-sizing: border-box;
 }
@@ -11,19 +15,48 @@ html {
 
 body {
   margin: 0;
+  min-width: 320px;
   font-family: 'Inter', sans-serif;
-  background: #ffffff;
-  color: #123b55;
+  background: #f4f8fc;
+  color: #18344f;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Form elements */
+
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
+/* Focus accessibility */
+
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
-  outline: 3px solid #36b5a7;
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #42c8e8;
   outline-offset: 3px;
+}
+
+/* Links */
+
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+}
+
+/* Selection */
+
+::selection {
+  background: #42c8e8;
+  color: #102b46;
 }
