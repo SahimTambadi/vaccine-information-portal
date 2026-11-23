@@ -6,9 +6,21 @@ import { supabase } from "../lib/supabaseClient";
 function Navbar() {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const navigate = useNavigate();
 
+  // Close all menus
+  function closeMenus() {
+    setMobileOpen(false);
+    setExploreOpen(false);
+    setProfileOpen(false);
+  }
+
+  // Check administrator role
   async function checkAdminRole(userId) {
     const { data, error } = await supabase
       .from("user_roles")
@@ -17,7 +29,7 @@ function Navbar() {
       .maybeSingle();
 
     if (error) {
-      console.error("Admin role verification failed:", error.message);
+      console.error("Admin verification failed:", error.message);
       setIsAdmin(false);
       return;
     }
@@ -25,6 +37,7 @@ function Navbar() {
     setIsAdmin(data?.role === "admin");
   }
 
+  // Authentication and session management
   useEffect(() => {
     let active = true;
 
@@ -51,7 +64,7 @@ function Navbar() {
       if (!active) return;
 
       if (roleError) {
-        console.error("Admin role verification failed:", roleError.message);
+        console.error("Admin verification failed:", roleError.message);
         setIsAdmin(false);
       } else {
         setIsAdmin(roleData?.role === "admin");
@@ -67,9 +80,8 @@ function Navbar() {
 
       setUser(currentUser);
       setIsAdmin(false);
-      setMenuOpen(false);
+      closeMenus();
 
-      // Check the role after the authentication callback completes.
       if (currentUser) {
         Promise.resolve().then(() => {
           if (active) {
@@ -85,6 +97,7 @@ function Navbar() {
     };
   }, []);
 
+  // Logout
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();
 
@@ -95,90 +108,247 @@ function Navbar() {
 
     setUser(null);
     setIsAdmin(false);
-    setMenuOpen(false);
+    closeMenus();
     navigate("/");
   }
 
-  function closeMenu() {
-    setMenuOpen(false);
-  }
+  // Active navigation style
+  const navClass = ({ isActive }) =>
+    `vc-nav-link${isActive ? " active" : ""}`;
 
   return (
-    <nav className="navbar">
-      <NavLink to="/" className="logo" onClick={closeMenu}>
-        <span>✚</span> VaxCare
-      </NavLink>
+    <header className="vc-header">
+      <nav className="vc-navbar">
 
-      <div className="nav-links">
-        <NavLink to="/" onClick={closeMenu}>
-          Home
+        {/* BRAND */}
+        <NavLink
+          to="/"
+          className="vc-brand"
+          onClick={closeMenus}
+        >
+          <span className="vc-brand-icon">
+            +
+          </span>
+
+          <span className="vc-brand-copy">
+            <strong>VaxCare</strong>
+            <small>Healthcare, made accessible</small>
+          </span>
         </NavLink>
 
-        <NavLink to="/vaccines" onClick={closeMenu}>
-          Vaccines
-        </NavLink>
+        {/* MOBILE MENU BUTTON */}
+        <button
+          type="button"
+          className="vc-mobile-toggle"
+          onClick={() => setMobileOpen((previous) => !previous)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? "✕" : "☰"}
+        </button>
 
-        <NavLink to="/about" onClick={closeMenu}>
-          About
-        </NavLink>
+        {/* NAVIGATION CONTENT */}
+        <div className={`vc-navigation ${mobileOpen ? "open" : ""}`}>
 
-        {user && isAdmin && (
-          <NavLink to="/admin" onClick={closeMenu}>
-            Admin Dashboard
-          </NavLink>
-        )}
-      </div>
+          {/* MAIN NAVIGATION */}
+          <div className="vc-nav-links">
 
-      <div className="nav-auth">
-        {user ? (
-          <div className="profile-menu">
-            <button
-              type="button"
-              className="profile-icon-button"
-              onClick={() => setMenuOpen((previous) => !previous)}
-              aria-label="Open profile menu"
-              aria-expanded={menuOpen}
+            {/* HOME */}
+            <NavLink
+              to="/"
+              end
+              className={navClass}
+              onClick={closeMenus}
             >
-              👤
-            </button>
+              Home
+            </NavLink>
 
-            {menuOpen && (
-              <div className="profile-dropdown">
-                <div className="dropdown-user">
-                  <strong>
-                    {user.user_metadata?.full_name || "VaxCare User"}
-                  </strong>
+            {/* HEALTHCARE SERVICES */}
+            <div className="vc-dropdown">
 
-                  <span>{user.email}</span>
+              <button
+                type="button"
+                className={`vc-nav-link vc-dropdown-trigger ${
+                  exploreOpen ? "active" : ""
+                }`}
+                onClick={() => {
+                  setExploreOpen((previous) => !previous);
+                  setProfileOpen(false);
+                }}
+                aria-expanded={exploreOpen}
+              >
+                Healthcare Services
+                <span>⌄</span>
+              </button>
+
+              {exploreOpen && (
+                <div className="vc-dropdown-panel">
+
+                  <div className="vc-dropdown-heading">
+                    Explore Healthcare
+                  </div>
+
+                  <NavLink
+                    to="/vaccines"
+                    onClick={closeMenus}
+                  >
+                    <span>💉</span>
+                    Vaccines
+                  </NavLink>
+
+                  <div className="vc-coming-soon">
+                    <span>💊</span>
+                    <span>Medicines</span>
+                    <small>Coming Soon</small>
+                  </div>
+
+                  <div className="vc-coming-soon">
+                    <span>🩺</span>
+                    <span>Diseases</span>
+                    <small>Coming Soon</small>
+                  </div>
+
+                  <div className="vc-coming-soon">
+                    <span>❤️</span>
+                    <span>Treatments</span>
+                    <small>Coming Soon</small>
+                  </div>
+
+                  <div className="vc-coming-soon">
+                    <span>👨‍⚕️</span>
+                    <span>Find Doctors</span>
+                    <small>Coming Soon</small>
+                  </div>
+
+                  <div className="vc-coming-soon">
+                    <span>🏥</span>
+                    <span>Hospitals</span>
+                    <small>Coming Soon</small>
+                  </div>
+
                 </div>
+              )}
+            </div>
 
-                <NavLink to="/profile" onClick={closeMenu}>
-                  <span>👤</span> My Profile
-                </NavLink>
+            {/* ABOUT - LAST MAIN NAVIGATION ITEM */}
+            <NavLink
+              to="/about"
+              className={navClass}
+              onClick={closeMenus}
+            >
+              About
+            </NavLink>
 
-                <NavLink to="/settings" onClick={closeMenu}>
-                  <span>⚙️</span> Settings
-                </NavLink>
-
-                <button type="button" onClick={handleLogout}>
-                  <span>↪</span> Logout
-                </button>
-              </div>
+            {/* ADMIN */}
+            {user && isAdmin && (
+              <NavLink
+                to="/admin"
+                className={navClass}
+                onClick={closeMenus}
+              >
+                Admin
+              </NavLink>
             )}
-          </div>
-        ) : (
-          <>
-            <NavLink to="/login" className="nav-button">
-              Login
-            </NavLink>
 
-            <NavLink to="/signup" className="nav-button">
-              Sign Up
-            </NavLink>
-          </>
-        )}
-      </div>
-    </nav>
+          </div>
+
+          {/* ACCOUNT SECTION */}
+          <div className="vc-account">
+
+            {user ? (
+
+              /* LOGGED-IN USER */
+              <div className="vc-profile">
+
+                <button
+                  type="button"
+                  className="vc-profile-trigger"
+                  onClick={() => {
+                    setProfileOpen((previous) => !previous);
+                    setExploreOpen(false);
+                  }}
+                  aria-label="Open profile menu"
+                  aria-expanded={profileOpen}
+                >
+                  <span className="vc-avatar">
+                    {(user.user_metadata?.full_name || user.email || "U")
+                      .charAt(0)
+                      .toUpperCase()}
+                  </span>
+
+                  <span className="vc-profile-label">
+                    My Account
+                  </span>
+
+                  <span>⌄</span>
+                </button>
+
+                {profileOpen && (
+                  <div className="vc-profile-panel">
+
+                    <div className="vc-profile-info">
+                      <strong>
+                        {user.user_metadata?.full_name || "VaxCare User"}
+                      </strong>
+
+                      <span>{user.email}</span>
+                    </div>
+
+                    <NavLink
+                      to="/profile"
+                      onClick={closeMenus}
+                    >
+                      👤 My Profile
+                    </NavLink>
+
+                    <NavLink
+                      to="/settings"
+                      onClick={closeMenus}
+                    >
+                      ⚙ Account Settings
+                    </NavLink>
+
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                    >
+                      ↪ Sign Out
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
+
+            ) : (
+
+              /* LOGGED-OUT USER */
+              <div className="vc-auth-actions">
+
+                <NavLink
+                  to="/login"
+                  className="vc-login"
+                  onClick={closeMenus}
+                >
+                  Login
+                </NavLink>
+
+                <NavLink
+                  to="/signup"
+                  className="vc-signup"
+                  onClick={closeMenus}
+                >
+                  Get Started
+                </NavLink>
+
+              </div>
+
+            )}
+
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 }
 

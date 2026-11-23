@@ -1,41 +1,48 @@
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
+
+const initialForm = {
+  name: "",
+  full_name: "",
+  category: "",
+  purpose: "",
+  age: "",
+  icon: "💉",
+};
 
 function AdminVaccineEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    full_name: "",
-    category: "",
-    purpose: "",
-    age: "",
-    icon: "💉",
-  });
+  const isEditing = Boolean(id);
 
-  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState(initialForm);
+  const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    fetchVaccine();
-  }, [id]);
+  const fetchVaccine = useCallback(async () => {
+    if (!isEditing) {
+      setFormData(initialForm);
+      setLoading(false);
+      setError("");
+      return;
+    }
 
-  async function fetchVaccine() {
     setLoading(true);
     setError("");
 
-    const { data, error } = await supabase
+    const { data, error: fetchError } = await supabase
       .from("vaccines")
       .select("*")
       .eq("id", id)
       .single();
 
-    if (error) {
-      setError("Unable to load vaccine: " + error.message);
+    if (fetchError) {
+      console.error("Vaccine fetch error:", fetchError);
+      setError("Unable to load vaccine: " + fetchError.message);
       setLoading(false);
       return;
     }
@@ -50,7 +57,11 @@ function AdminVaccineEdit() {
     });
 
     setLoading(false);
-  }
+  }, [id, isEditing]);
+
+  useEffect(() => {
+    fetchVaccine();
+  }, [fetchVaccine]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -59,9 +70,11 @@ function AdminVaccineEdit() {
       ...previous,
       [name]: value,
     }));
+
+    setError("");
   }
 
-  async function handleUpdate(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (saving) return;
@@ -73,13 +86,14 @@ function AdminVaccineEdit() {
       !formData.age.trim()
     ) {
       setError("Please complete all required fields.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
     setSaving(true);
     setError("");
 
-    const updateData = {
+    const vaccineData = {
       name: formData.name.trim(),
       full_name: formData.full_name.trim() || null,
       category: formData.category.trim(),
@@ -88,162 +102,263 @@ function AdminVaccineEdit() {
       icon: formData.icon.trim() || "💉",
     };
 
-    const { data, error } = await supabase
-      .from("vaccines")
-      .update(updateData)
-      .eq("id", id)
-      .select("id")
-      .maybeSingle();
+    let result;
 
-    if (error) {
-      setError("Unable to update vaccine: " + error.message);
+    if (isEditing) {
+      result = await supabase
+        .from("vaccines")
+        .update(vaccineData)
+        .eq("id", id)
+        .select("id")
+        .maybeSingle();
+    } else {
+      result = await supabase
+        .from("vaccines")
+        .insert([vaccineData])
+        .select("id")
+        .single();
+    }
+
+    if (result.error) {
+      console.error("Vaccine save error:", result.error);
+      setError(
+        `Unable to ${isEditing ? "update" : "create"} vaccine: ${result.error.message}`
+      );
+      setSaving(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (!result.data?.id) {
+      setError(
+        "No vaccine record was returned. Check your administrator permissions."
+      );
       setSaving(false);
       return;
     }
 
-    if (!data) {
-      setError("No vaccine was updated. Check your admin permissions.");
-      setSaving(false);
-      return;
-    }
+    navigate(`/admin/vaccines/${result.data.id}`, {
+      replace: true,
+      state: {
+        message: isEditing
+          ? "Vaccine updated successfully."
+          : "Vaccine created successfully.",
+      },
+    });
+  }
 
-    navigate(`/admin/vaccines/${id}`);
+  const backLink = isEditing
+    ? `/admin/vaccines/${id}`
+    : "/admin/vaccines";
+
+  if (loading) {
+    return (
+      <main className="app admin-vaccine-page">
+        <p>Loading vaccine information...</p>
+      </main>
+    );
+  }
+
+  if (error && isEditing && !formData.name) {
+    return (
+      <main className="app admin-vaccine-page">
+        <section className="admin-form-section">
+          <div className="admin-form-heading">
+            <h2>Unable to load vaccine</h2>
+            <p className="auth-error">{error}</p>
+          </div>
+
+          <div className="admin-form-actions">
+            <button
+              type="button"
+              className="admin-save-button"
+              onClick={fetchVaccine}
+            >
+              Try Again
+            </button>
+
+            <Link
+              to="/admin/vaccines"
+              className="admin-cancel-button admin-edit-link"
+            >
+              Back to Vaccines
+            </Link>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   return (
     <main className="app admin-vaccine-page">
 
+      {/* PAGE HERO */}
+
       <section className="hero">
         <div className="hero-content">
           <p className="eyebrow">VAXCARE ADMINISTRATION</p>
-          <h1>Edit <span>Vaccine.</span></h1>
+
+          <h1>
+            {isEditing ? (
+              <>Edit <span>Vaccine.</span></>
+            ) : (
+              <>Add <span>Vaccine.</span></>
+            )}
+          </h1>
 
           <p className="hero-description">
-            Update the selected vaccine information.
+            {isEditing
+              ? "Update the selected vaccine information."
+              : "Create a new vaccine information record for VaxCare."}
           </p>
 
-          <Link
-            to={`/admin/vaccines/${id}`}
-            className="hero-button"
-          >
-            ← Back to Vaccine Details
+          <Link to={backLink} className="hero-button">
+            ← Back to Vaccines
           </Link>
         </div>
 
         <div className="hero-visual">
-          <div className="medical-circle">✏️</div>
+          <div className="medical-circle">
+            {isEditing ? "✏️" : "💉"}
+          </div>
         </div>
       </section>
 
-      {loading ? (
-        <p>Loading vaccine information...</p>
-      ) : error && !formData.name ? (
-        <p className="auth-error">{error}</p>
-      ) : (
+      {/* FORM */}
 
-        <section className="admin-form-section">
+      <section className="admin-form-section">
 
-          <div className="admin-form-heading">
-            <p className="eyebrow">UPDATE RECORD</p>
-            <h2>Edit Vaccine Information</h2>
-            <p>Vaccine ID: {id}</p>
+        <div className="admin-form-heading">
+          <p className="eyebrow">
+            {isEditing ? "UPDATE RECORD" : "NEW RECORD"}
+          </p>
+
+          <h2>
+            {isEditing
+              ? "Edit Vaccine Information"
+              : "Create Vaccine Information"}
+          </h2>
+
+          <p>
+            {isEditing
+              ? `Vaccine ID: ${id}`
+              : "Complete the required information below."}
+          </p>
+        </div>
+
+        {error && (
+          <p className="auth-error" role="alert">
+            {error}
+          </p>
+        )}
+
+        <form
+          className="admin-vaccine-form"
+          onSubmit={handleSubmit}
+        >
+
+          <div className="admin-form-group">
+            <label htmlFor="name">Vaccine Name *</label>
+            <input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter vaccine name"
+              required
+            />
           </div>
 
-          <form
-            className="admin-vaccine-form"
-            onSubmit={handleUpdate}
-          >
+          <div className="admin-form-group">
+            <label htmlFor="full_name">Full Name</label>
+            <input
+              id="full_name"
+              name="full_name"
+              value={formData.full_name}
+              onChange={handleChange}
+              placeholder="Enter full vaccine name"
+            />
+          </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="name">Vaccine Name *</label>
-              <input
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="admin-form-group">
+            <label htmlFor="category">Category *</label>
+            <input
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              placeholder="Enter vaccine category"
+              required
+            />
+          </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="full_name">Full Name</label>
-              <input
-                id="full_name"
-                name="full_name"
-                value={formData.full_name}
-                onChange={handleChange}
-              />
-            </div>
+          <div className="admin-form-group">
+            <label htmlFor="age">Recommended Age *</label>
+            <input
+              id="age"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter source-supported age information"
+              required
+            />
+          </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="category">Category *</label>
-              <input
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="admin-form-group full-width">
+            <label htmlFor="purpose">Purpose *</label>
+            <textarea
+              id="purpose"
+              name="purpose"
+              value={formData.purpose}
+              onChange={handleChange}
+              placeholder="Enter verified vaccine purpose"
+              rows={4}
+              required
+            />
+          </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="age">Recommended Age *</label>
-              <input
-                id="age"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="admin-form-group">
+            <label htmlFor="icon">Vaccine Icon</label>
+            <input
+              id="icon"
+              name="icon"
+              value={formData.icon}
+              onChange={handleChange}
+              placeholder="💉"
+            />
+          </div>
 
-            <div className="admin-form-group full-width">
-              <label htmlFor="purpose">Purpose *</label>
-              <textarea
-                id="purpose"
-                name="purpose"
-                value={formData.purpose}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="admin-form-actions">
 
-            <div className="admin-form-group">
-              <label htmlFor="icon">Vaccine Icon</label>
-              <input
-                id="icon"
-                name="icon"
-                value={formData.icon}
-                onChange={handleChange}
-              />
-            </div>
+            <Link
+              to={backLink}
+              className="admin-cancel-button admin-edit-link"
+            >
+              Cancel
+            </Link>
 
-            {error && (
-              <p className="auth-error full-width">{error}</p>
-            )}
+            <button
+              type="submit"
+              className="admin-save-button"
+              disabled={saving}
+            >
+              {saving
+                ? "Saving..."
+                : isEditing
+                  ? "Update Vaccine"
+                  : "Create Vaccine"}
+            </button>
 
-            <div className="admin-form-actions">
-              <Link
-                to={`/admin/vaccines/${id}`}
-                className="admin-cancel-button admin-edit-link"
-              >
-                Cancel
-              </Link>
+          </div>
+        </form>
 
-              <button
-                type="submit"
-                className="admin-save-button"
-                disabled={saving}
-              >
-                {saving ? "Updating..." : "Update Vaccine"}
-              </button>
-            </div>
+        <p className="admin-form-note">
+          Enter accurate vaccine information supported by reliable
+          medical references. Verify all details before making
+          information available to users.
+        </p>
 
-          </form>
-
-        </section>
-      )}
-
+      </section>
     </main>
   );
 }

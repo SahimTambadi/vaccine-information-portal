@@ -2,8 +2,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================
-   VAXCARE - GLOBAL STYLES
+   VAXCARE - GLOBAL DESIGN FOUNDATION
+   Premium Clinical Platform
 ========================================== */
+
+/* 1. DESIGN TOKENS */
+
+:root {
+  /* Brand colors */
+  --navy: #102B46;
+  --navy-dark: #091E35;
+  --blue: #1769AA;
+  --blue-light: #EAF3FC;
+  --cyan: #42C8E8;
+  --teal: #0D9E91;
+
+  /* Text colors */
+  --text-primary: #18344F;
+  --text-secondary: #718096;
+  --text-muted: #8291A1;
+
+  /* Background colors */
+  --background: #F2F7FA;
+  --surface: #FFFFFF;
+  --surface-soft: #F8FBFD;
+
+  /* Borders */
+  --border: #E2EAF0;
+  --border-strong: #D5E1EC;
+
+  /* Status colors */
+  --success: #16845B;
+  --success-light: #EAF8F0;
+  --danger: #C0392B;
+  --danger-light: #FFF0F0;
+  --warning: #B7791F;
+  --warning-light: #FFF8E7;
+
+  /* Shadows */
+  --shadow-sm: 0 3px 12px rgba(16, 43, 70, 0.04);
+  --shadow-md: 0 8px 25px rgba(16, 43, 70, 0.07);
+  --shadow-lg: 0 14px 35px rgba(16, 43, 70, 0.10);
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* 2. GLOBAL RESET */
 
 * {
   box-sizing: border-box;
@@ -11,18 +78,27 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  font-family: 'Inter', sans-serif;
-  background: #f4f8fc;
-  color: #18344f;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  background: var(--background);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Form elements */
+/* React application root */
+
+#root {
+  min-height: 100vh;
+}
+
+/* 3. FORM ELEMENTS */
 
 button,
 input,
@@ -31,32 +107,58 @@ select {
   font: inherit;
 }
 
-/* Focus accessibility */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea,
+select {
+  color: var(--text-primary);
+}
+
+/* 4. ACCESSIBILITY AND FOCUS */
 
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 3px solid #42c8e8;
+  outline: 3px solid var(--cyan);
   outline-offset: 3px;
 }
 
-/* Links */
+/* 5. LINKS */
 
 a {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Images */
+/* 6. IMAGES */
 
 img {
   max-width: 100%;
 }
 
-/* Selection */
+/* 7. TEXT SELECTION */
 
 ::selection {
-  background: #42c8e8;
-  color: #102b46;
+  background: var(--cyan);
+  color: var(--navy);
+}
+
+/* 8. REDUCED MOTION ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

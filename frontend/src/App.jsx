@@ -11,6 +11,13 @@ import "./App.css";
 
 import Vaccines from "./pages/Vaccines";
 import VaccineDetails from "./pages/VaccineDetails";
+import Medicines from "./pages/Medicines";
+import MedicineDetails from "./pages/MedicineDetails";
+import AdminMedicines from "./pages/AdminMedicines";
+import AdminMedicineDetails from "./pages/AdminMedicineDetails";
+import AdminMedicineEdit from "./pages/AdminMedicineEdit";
+import AdminVaccineImport from "./pages/AdminVaccineImport";
+
 import MainLayout from "./components/MainLayout";
 import About from "./pages/About";
 import { supabase } from "./lib/supabaseClient";
@@ -23,6 +30,7 @@ import Settings from "./pages/Settings";
 import AdminVaccines from "./pages/AdminVaccines";
 import AdminVaccineDetails from "./pages/AdminVaccineDetails";
 import AdminVaccineEdit from "./pages/AdminVaccineEdit";
+
 // ==========================================
 // ADMIN ROUTE PROTECTION
 // ==========================================
@@ -40,9 +48,7 @@ function AdminRoute({ children }) {
       } = await supabase.auth.getUser();
 
       if (userError || !userData.user) {
-        if (active) {
-          setStatus("denied");
-        }
+        if (active) setStatus("denied");
         return;
       }
 
@@ -93,11 +99,14 @@ function AdminRoute({ children }) {
 
 function AdminDashboard() {
   const [totalVaccines, setTotalVaccines] = useState(0);
+  const [totalMedicines, setTotalMedicines] = useState(0);
   const [adminEmail, setAdminEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    let active = true;
+
     async function loadDashboard() {
       const {
         data: userData,
@@ -105,33 +114,48 @@ function AdminDashboard() {
       } = await supabase.auth.getUser();
 
       if (userError || !userData.user) {
-        setError("Unable to load administrator information.");
-        setLoading(false);
+        if (active) {
+          setError("Unable to load administrator information.");
+          setLoading(false);
+        }
         return;
       }
 
-      setAdminEmail(userData.user.email || "");
-
-      const {
-        count,
-        error: vaccineError,
-      } = await supabase
-        .from("vaccines")
-        .select("*", {
-          count: "exact",
-          head: true,
-        });
-
-      if (vaccineError) {
-        setError("Unable to load vaccine statistics.");
-      } else {
-        setTotalVaccines(count || 0);
+      if (active) {
+        setAdminEmail(userData.user.email || "");
       }
 
+      const [
+        { count: vaccineCount, error: vaccineError },
+        { count: medicineCount, error: medicineError },
+      ] = await Promise.all([
+        supabase
+          .from("vaccines")
+          .select("*", { count: "exact", head: true }),
+
+        supabase
+          .from("medicines")
+          .select("*", { count: "exact", head: true }),
+      ]);
+
+      if (!active) return;
+
+      if (vaccineError || medicineError) {
+        setError(
+          "Some platform statistics could not be loaded. Check database permissions."
+        );
+      }
+
+      setTotalVaccines(vaccineCount || 0);
+      setTotalMedicines(medicineCount || 0);
       setLoading(false);
     }
 
     loadDashboard();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
@@ -150,7 +174,7 @@ function AdminDashboard() {
           </h1>
 
           <p className="hero-description">
-            Manage vaccine information and monitor
+            Manage healthcare information and monitor
             your VaxCare platform.
           </p>
 
@@ -171,7 +195,7 @@ function AdminDashboard() {
           <p className="eyebrow">OVERVIEW</p>
           <h2>Platform Statistics</h2>
           <p>
-            Quick overview of your VaxCare platform.
+            Quick overview of your VaxCare healthcare database.
           </p>
         </div>
       </section>
@@ -196,7 +220,23 @@ function AdminDashboard() {
           </h3>
 
           <p>
-            Total vaccines stored in your database.
+            Total vaccine records in your database.
+          </p>
+        </div>
+
+        <div className="vaccine-card">
+          <div className="vaccine-icon">💊</div>
+
+          <span className="category">
+            MEDICINE DATABASE
+          </span>
+
+          <h3>
+            {loading ? "Loading..." : totalMedicines}
+          </h3>
+
+          <p>
+            Total medicine records in your database.
           </p>
         </div>
 
@@ -214,54 +254,65 @@ function AdminDashboard() {
           </p>
         </div>
 
-        <div className="vaccine-card">
-          <div className="vaccine-icon">🛡️</div>
-
-          <span className="category">
-            ACCESS CONTROL
-          </span>
-
-          <h3>Verified</h3>
-
-          <p>
-            Your administrator access is verified.
-          </p>
-        </div>
-
       </section>
 
-      {/* QUICK ACTIONS */}
+      
+   
+{/* QUICK ACTIONS */}
 
-      <section className="search-section">
-        <div>
-          <p className="eyebrow">QUICK ACTIONS</p>
-          <h2>Manage Your Platform</h2>
-          <p>
-            Access the main areas of VaxCare.
-          </p>
-        </div>
-      </section>
+<section className="search-section">
+  <div>
+    <p className="eyebrow">QUICK ACTIONS</p>
+    <h2>Manage Your Platform</h2>
+    <p>
+      Select a healthcare module to view and manage its records.
+    </p>
+  </div>
+</section>
 
-      <section className="vaccine-grid">
+<section className="vaccine-grid">
 
-        <div className="vaccine-card">
-          <div className="vaccine-icon">💉</div>
+  <Link
+    to="/admin/vaccines"
+    className="vaccine-card admin-module-card"
+  >
+    <div className="vaccine-icon">💉</div>
 
-          <h3>Vaccine Management</h3>
+    <span className="category">VACCINE DATABASE</span>
 
-          <p>
-            View and manage the existing vaccine information.
-          </p>
+    <h3>Vaccine Management</h3>
 
-          <Link
-            to="/admin/vaccines"
-            className="details-button"
-          >
-            Manage Vaccines →
-          </Link>
-        </div>
+    <p>
+      View vaccine records, add new vaccines, update information
+      and manage your vaccine database.
+    </p>
 
-      </section>
+    <span className="details-button">
+      View Details →
+    </span>
+  </Link>
+
+  <Link
+    to="/admin/medicines"
+    className="vaccine-card admin-module-card"
+  >
+    <div className="vaccine-icon">💊</div>
+
+    <span className="category">MEDICINE DATABASE</span>
+
+    <h3>Medicine Management</h3>
+
+    <p>
+      View medicine records, add new medicines, update information
+      and manage your medicine database.
+    </p>
+
+    <span className="details-button">
+      View Details →
+    </span>
+  </Link>
+
+</section>
 
     </main>
   );
@@ -278,27 +329,24 @@ function HomePage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    let active = true;
+
     async function fetchVaccines() {
       const { data, error } = await supabase
         .from("vaccines")
         .select("*")
         .order("id", { ascending: true });
 
+      if (!active) return;
+
       if (error) {
-        console.error(
-          "Error fetching vaccines:",
-          error.message
-        );
-
-        setError(
-          "Unable to load vaccines. Please try again later."
-        );
-
+        console.error("Error fetching vaccines:", error.message);
+        setError("Unable to load vaccines. Please try again later.");
         setLoading(false);
         return;
       }
 
-      const formattedVaccines = data.map((vaccine) => ({
+      const formattedVaccines = (data || []).map((vaccine) => ({
         ...(vaccine.details || {}),
         id: vaccine.id,
         name: vaccine.name,
@@ -314,10 +362,14 @@ function HomePage() {
     }
 
     fetchVaccines();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const filteredVaccines = vaccines.filter((vaccine) => {
-    const searchText = search.toLowerCase();
+    const searchText = search.toLowerCase().trim();
 
     return [
       vaccine.name,
@@ -325,156 +377,392 @@ function HomePage() {
       vaccine.category,
       vaccine.purpose,
       vaccine.age,
-      ...(Array.isArray(
-        vaccine.protection?.diseases
-      )
+      ...(Array.isArray(vaccine.protection?.diseases)
         ? vaccine.protection.diseases
         : []),
     ]
       .filter(Boolean)
       .some((item) =>
-        String(item)
-          .toLowerCase()
-          .includes(searchText)
+        String(item).toLowerCase().includes(searchText)
       );
   });
 
   return (
-    <div className="app">
+    <main className="app home-page">
 
       {/* HERO SECTION */}
 
-      <section className="hero">
-        <div className="hero-content">
-          <p className="eyebrow">
-            YOUR HEALTH, OUR PRIORITY
-          </p>
+      <section className="home-hero">
+        <div className="home-hero-content">
+
+          <span className="home-hero-badge">
+            ✚ YOUR HEALTHCARE INFORMATION PLATFORM
+          </span>
 
           <h1>
-            Making Vaccine
+            Your Health.
             <br />
-            Information <span>Accessible.</span>
+            Your Care.
+            <br />
+            <span>All in One Place.</span>
           </h1>
 
-          <p className="hero-description">
-            Explore vaccine information, understand
-            vaccination schedules and discover
-            vaccination centres in your area.
+          <p>
+            Discover healthcare information, explore vaccines
+            and medicines, understand diseases and connect
+            with healthcare services.
           </p>
 
-          <Link
-            to="/vaccines"
-            className="hero-button"
-          >
-            Explore Vaccines →
-          </Link>
+          <div className="home-hero-actions">
+            <Link
+              to="/vaccines"
+              className="home-primary-button"
+            >
+              Explore Vaccines →
+            </Link>
+
+            <Link
+              to="/medicines"
+              className="home-secondary-button"
+            >
+              Explore Medicines
+            </Link>
+          </div>
+
+          <div className="home-trust-note">
+            ✓ Healthcare awareness &nbsp; ✓ Accessible information
+          </div>
+
         </div>
 
-        <div className="hero-visual">
-          <div className="medical-circle">💉</div>
+        <div className="home-hero-visual">
+          <div className="home-medical-orbit">
+            <div className="home-medical-icon">✚</div>
+            <span className="orbit-icon orbit-one">💊</span>
+            <span className="orbit-icon orbit-two">🩺</span>
+            <span className="orbit-icon orbit-three">💉</span>
+            <span className="orbit-icon orbit-four">🏥</span>
+          </div>
 
-          <div className="floating-card">
-            <span>✓</span> Stay informed. Stay protected.
+          <div className="home-floating-info">
+            <span>✓</span>
+            Healthcare information in one place
           </div>
         </div>
       </section>
 
-      {/* VACCINE SEARCH */}
+      {/* HEALTHCARE SEARCH */}
 
-      <section className="search-section" id="vaccines">
-        <div>
-          <p className="eyebrow">
-            VACCINE DIRECTORY
-          </p>
+      <section className="home-search-section">
+        <div className="home-search-heading">
+          <span className="home-section-label">
+            HEALTHCARE SEARCH
+          </span>
 
-          <h2>Explore Vaccines</h2>
+          <h2>What are you looking for?</h2>
 
           <p>
-            Find information about different vaccines.
+            Explore vaccine and medicine information through
+            the available VaxCare directories.
           </p>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search by vaccine, disease or age group..."
-          value={search}
-          onChange={(event) =>
-            setSearch(event.target.value)
-          }
-        />
+        <div className="home-search-box">
+          <span>⌕</span>
+
+          <input
+            type="text"
+            placeholder="Search vaccines, diseases or age groups..."
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            aria-label="Search vaccines"
+          />
+
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </section>
 
-      {/* VACCINE CARDS */}
+      {/* HEALTHCARE CATEGORIES */}
 
-      <section className="vaccine-grid">
+      <section
+        className="home-services-section"
+        id="healthcare-services"
+      >
+        <div className="home-section-heading">
+          <div>
+            <span className="home-section-label">
+              EXPLORE HEALTHCARE
+            </span>
+
+            <h2>Healthcare Services</h2>
+
+            <p>
+              Explore different areas of healthcare through
+              one platform.
+            </p>
+          </div>
+        </div>
+
+        <div className="home-services-grid">
+
+          <Link
+            to="/vaccines"
+            className="home-service-card home-service-active"
+          >
+            <div className="home-service-icon">💉</div>
+
+            <h3>Vaccines</h3>
+
+            <p>
+              Explore vaccine information, purposes and
+              vaccination details.
+            </p>
+
+            <span className="home-service-link">
+              Explore Vaccines →
+            </span>
+          </Link>
+
+          <Link
+            to="/medicines"
+            className="home-service-card home-service-active"
+          >
+            <div className="home-service-icon">💊</div>
+
+            <h3>Medicines</h3>
+
+            <p>
+              Explore medicine information, active ingredients,
+              uses and safety information.
+            </p>
+
+            <span className="home-service-link">
+              Explore Medicines →
+            </span>
+          </Link>
+
+          <div className="home-service-card">
+            <div className="home-service-icon">🦠</div>
+
+            <h3>Diseases</h3>
+
+            <p>
+              Understand diseases, symptoms and evidence-based
+              treatment information.
+            </p>
+
+            <span className="home-coming-soon">
+              Coming Soon
+            </span>
+          </div>
+
+          <div className="home-service-card">
+            <div className="home-service-icon">🩺</div>
+
+            <h3>Doctors</h3>
+
+            <p>
+              Discover doctors and healthcare specialists.
+            </p>
+
+            <span className="home-coming-soon">
+              Coming Soon
+            </span>
+          </div>
+
+          <div className="home-service-card">
+            <div className="home-service-icon">🏥</div>
+
+            <h3>Hospitals</h3>
+
+            <p>
+              Find hospitals and explore healthcare services.
+            </p>
+
+            <span className="home-coming-soon">
+              Coming Soon
+            </span>
+          </div>
+
+        </div>
+      </section>
+
+      {/* VACCINE DIRECTORY */}
+
+      <section
+        className="home-vaccine-section"
+        id="vaccines"
+      >
+        <div className="home-section-heading">
+          <div>
+            <span className="home-section-label">
+              AVAILABLE DIRECTORY
+            </span>
+
+            <h2>Explore Vaccines</h2>
+
+            <p>
+              Discover information about vaccines and the
+              diseases they help prevent.
+            </p>
+          </div>
+
+          <Link
+            to="/vaccines"
+            className="home-view-all"
+          >
+            View All Vaccines →
+          </Link>
+        </div>
 
         {loading ? (
-          <p>Loading vaccines...</p>
+          <p className="home-message">
+            Loading vaccines...
+          </p>
         ) : error ? (
-          <p>{error}</p>
-        ) : filteredVaccines.length > 0 ? (
-          filteredVaccines.map((vaccine) => (
-            <div
-              className="vaccine-card"
-              key={vaccine.id}
-            >
-              <div className="vaccine-icon">
-                {vaccine.icon}
-              </div>
-
-              <span className="category">
-                {vaccine.category}
-              </span>
-
-              <h3>{vaccine.name}</h3>
-
-              <p>{vaccine.purpose}</p>
-
-              <div className="vaccine-age">
-                Age group: {vaccine.age}
-              </div>
-
-              <Link
-                to={`/vaccines/${vaccine.id}`}
-                className="details-button"
-              >
-                View Details →
-              </Link>
-            </div>
-          ))
+          <p className="home-message home-error">
+            {error}
+          </p>
         ) : (
-          <p>No matching vaccines found.</p>
-        )}
+          <>
+            <p className="home-results-count">
+              {search
+                ? `${filteredVaccines.length} matching vaccines`
+                : `${vaccines.length} vaccines available`}
+            </p>
 
+            {filteredVaccines.length > 0 ? (
+              <div className="home-vaccine-grid">
+                {filteredVaccines.slice(0, 8).map((vaccine) => (
+                  <article
+                    className="home-vaccine-card"
+                    key={vaccine.id}
+                  >
+                    <div className="home-vaccine-icon">
+                      {vaccine.icon || "💉"}
+                    </div>
+
+                    <span className="home-vaccine-category">
+                      {vaccine.category}
+                    </span>
+
+                    <h3>{vaccine.name}</h3>
+
+                    <p>{vaccine.purpose}</p>
+
+                    <div className="home-vaccine-age">
+                      Age group: {vaccine.age || "Not specified"}
+                    </div>
+
+                    <Link
+                      to={`/vaccines/${vaccine.id}`}
+                      className="home-vaccine-link"
+                    >
+                      View Details →
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="home-message">
+                No matching vaccines found. Try another search.
+              </p>
+            )}
+
+            {!search && vaccines.length > 8 && (
+              <div className="home-vaccine-more">
+                <Link
+                  to="/vaccines"
+                  className="home-primary-button"
+                >
+                  Discover All Vaccines →
+                </Link>
+              </div>
+            )}
+          </>
+        )}
       </section>
 
-      {/* ABOUT SECTION */}
+      {/* MEDICINE PROMOTION */}
 
-      <section className="about-section" id="about">
-        <h2>
-          Reliable Information. Better Awareness.
-        </h2>
+      <section className="home-awareness-section">
+        <div>
+          <span className="home-section-label">
+            MEDICINE INFORMATION
+          </span>
 
-        <p>
-          Our portal helps people access general vaccine
-          information and discover vaccination services.
-        </p>
+          <h2>Understand Medicines. Make Informed Decisions.</h2>
+
+          <p>
+            Explore published medicine information, including
+            active ingredients, medical uses, precautions and
+            available reference sources.
+          </p>
+
+          <Link
+            to="/medicines"
+            className="home-awareness-link"
+          >
+            Explore Medicines →
+          </Link>
+        </div>
+
+        <div className="home-awareness-icon">💊</div>
+      </section>
+
+      {/* ABOUT VAXCARE */}
+
+      <section className="home-awareness-section">
+        <div>
+          <span className="home-section-label">
+            OUR PURPOSE
+          </span>
+
+          <h2>Better Healthcare Awareness Starts Here.</h2>
+
+          <p>
+            VaxCare aims to make healthcare information easier
+            to discover and understand. Our goal is to bring
+            essential health information and healthcare discovery
+            services together in one accessible platform.
+          </p>
+
+          <Link
+            to="/about"
+            className="home-awareness-link"
+          >
+            Learn About VaxCare →
+          </Link>
+        </div>
+
+        <div className="home-awareness-icon">♡</div>
       </section>
 
       {/* FOOTER */}
 
-      <footer>
+      <footer className="home-footer">
+        <h3>✚ VaxCare</h3>
+
+        <p>Your Health. Your Care. All in One Place.</p>
+
         <p>
-          © 2026 VaxCare | Vaccine Information Portal
+          © 2026 VaxCare | Healthcare Information Platform
         </p>
 
         <p>
-          Educational information only. Consult a
-          qualified healthcare professional for medical advice.
+          Educational information only. Always consult a qualified
+          healthcare professional for medical advice and treatment.
         </p>
       </footer>
 
-    </div>
+    </main>
   );
 }
 
@@ -489,45 +777,30 @@ function App() {
 
         {/* PUBLIC ROUTES */}
 
-        <Route
-          path="/"
-          element={<HomePage />}
-        />
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/vaccines" element={<Vaccines />} />
+
+        <Route path="/vaccines/:id" element={<VaccineDetails />} />
+
+        <Route path="/medicines" element={<Medicines />} />
 
         <Route
-          path="/vaccines"
-          element={<Vaccines />}
+          path="/medicines/:id"
+          element={<MedicineDetails />}
         />
 
-        <Route
-          path="/about"
-          element={<About />}
-        />
+        <Route path="/about" element={<About />} />
 
-        <Route
-          path="/vaccines/:id"
-          element={<VaccineDetails />}
-        />
+        {/* AUTHENTICATION */}
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
+        <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
+        <Route path="/profile" element={<Profile />} />
 
-        <Route
-          path="/settings"
-          element={<Settings />}
-        />
+        <Route path="/settings" element={<Settings />} />
 
         {/* ADMIN DASHBOARD */}
 
@@ -550,8 +823,14 @@ function App() {
             </AdminRoute>
           }
         />
-
-        {/* ADMIN VACCINE DETAILS */}
+        <Route
+          path="/admin/vaccines/import"
+          element={
+            <AdminRoute>
+              <AdminVaccineImport />
+            </AdminRoute>
+          }
+        />
 
         <Route
           path="/admin/vaccines/:id"
@@ -562,8 +841,6 @@ function App() {
           }
         />
 
-        {/* ADMIN VACCINE EDIT PAGE */}
-
         <Route
           path="/admin/vaccines/:id/edit"
           element={
@@ -572,6 +849,51 @@ function App() {
             </AdminRoute>
           }
         />
+        {/* ADMIN MEDICINE MANAGEMENT */}
+
+<Route
+  path="/admin/medicines"
+  element={
+    <AdminRoute>
+      <AdminMedicines />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/medicines/:id"
+  element={
+    <AdminRoute>
+      <AdminMedicineDetails />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/medicines/new"
+  element={
+    <AdminRoute>
+      <AdminMedicineEdit />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/medicines/:id/edit"
+  element={
+    <AdminRoute>
+      <AdminMedicineEdit />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/vaccines/new"
+  element={
+    <AdminRoute>
+      <AdminVaccineEdit />
+    </AdminRoute>
+  }
+/>
+
 
       </Route>
     </Routes>

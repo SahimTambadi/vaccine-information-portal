@@ -1,0 +1,955 @@
+
+/* =====================================================
+   VAXCARE — VACCINE ADMINISTRATION
+   Professional Healthcare Admin Dashboard
+===================================================== */
+
+.app.vax-admin-page {
+  --vax-navy: #15324b;
+  --vax-blue: #1769aa;
+  --vax-blue-dark: #105487;
+  --vax-cyan: #42b9d5;
+  --vax-text: #263b50;
+  --vax-muted: #718096;
+  --vax-border: #e4eaf0;
+  --vax-surface: #ffffff;
+  --vax-background: #f5f8fb;
+
+  display: block;
+  width: calc(100% - 48px);
+  max-width: 1240px;
+  min-width: 0;
+  margin: 28px auto 0;
+  padding: 0 0 64px;
+  box-sizing: border-box;
+  color: var(--vax-text);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.vax-admin-page *,
+.vax-admin-page *::before,
+.vax-admin-page *::after {
+  box-sizing: border-box;
+}
+
+.vax-admin-page a {
+  text-decoration: none;
+}
+
+.vax-admin-page button,
+.vax-admin-page input,
+.vax-admin-page select {
+  font: inherit;
+}
+
+.vax-admin-page h1,
+.vax-admin-page h2,
+.vax-admin-page h3,
+.vax-admin-page p {
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.vax-admin-page .vax-admin-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 12px 0 30px;
+  border-bottom: 1px solid var(--vax-border);
+}
+
+.vax-admin-page .vax-header-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.vax-admin-page .vax-admin-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 27px;
+  color: var(--vax-muted);
+  font-size: 12px;
+}
+
+.vax-admin-page .vax-admin-breadcrumb a {
+  color: var(--vax-blue);
+  font-weight: 600;
+}
+
+.vax-admin-page .vax-admin-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.vax-admin-page .vax-section-label {
+  margin: 0 0 9px;
+  color: var(--vax-blue);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.vax-admin-page .vax-admin-header h1 {
+  margin: 0;
+  color: var(--vax-navy);
+  font-size: clamp(30px, 4vw, 43px);
+  font-weight: 780;
+  line-height: 1.15;
+  letter-spacing: -1.4px;
+}
+
+.vax-admin-page .vax-admin-header h1 span {
+  color: var(--vax-blue);
+}
+
+.vax-admin-page .vax-admin-description {
+  max-width: 650px;
+  margin: 14px 0 0;
+  color: var(--vax-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* =====================================================
+   BUTTON SYSTEM
+===================================================== */
+
+.vax-admin-page .vax-primary-button,
+.vax-admin-page .vax-outline-button,
+.vax-admin-page .vax-secondary-button,
+.vax-admin-page .vax-view-button {
+  min-height: 42px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vax-admin-page .vax-primary-button {
+  color: #fff;
+  background: var(--vax-blue);
+  border-color: var(--vax-blue);
+}
+
+.vax-admin-page .vax-primary-button:hover {
+  color: #fff;
+  background: var(--vax-blue-dark);
+  transform: translateY(-1px);
+}
+
+.vax-admin-page .vax-outline-button,
+.vax-admin-page .vax-secondary-button {
+  color: var(--vax-navy);
+  background: #fff;
+  border-color: var(--vax-border);
+}
+
+.vax-admin-page .vax-outline-button:hover,
+.vax-admin-page .vax-secondary-button:hover {
+  background: #f0f6fb;
+  border-color: #b9cfe0;
+}
+
+.vax-admin-page .vax-outline-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =====================================================
+   MANAGEMENT TOOLBAR
+===================================================== */
+
+.vax-admin-page .vax-management-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 27px 0;
+}
+
+.vax-admin-page .vax-management-toolbar h2,
+.vax-admin-page .vax-section-heading h2,
+.vax-admin-page .vax-review-summary h2,
+.vax-admin-page .vax-directory-heading h2 {
+  margin: 0;
+  color: var(--vax-navy);
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.35px;
+}
+
+.vax-admin-page .vax-management-toolbar > div:first-child > p:last-child {
+  margin: 7px 0 0;
+  color: var(--vax-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.vax-admin-page .vax-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+/* =====================================================
+   VACCINE OVERVIEW
+===================================================== */
+
+.vax-admin-page .vax-overview-section {
+  margin: 0 0 27px;
+}
+
+.vax-admin-page .vax-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 15px;
+}
+
+.vax-admin-page .vax-overview-caption {
+  color: var(--vax-muted);
+  font-size: 11px;
+}
+
+.vax-admin-page .vax-admin-statistics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.vax-admin-page .vax-stat-card {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 19px 20px;
+  overflow: hidden;
+  background: var(--vax-surface);
+  border: 1px solid var(--vax-border);
+  border-radius: 11px;
+  box-shadow: 0 2px 8px rgba(20, 48, 73, 0.025);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vax-admin-page .vax-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(20, 48, 73, 0.06);
+}
+
+.vax-admin-page .vax-stat-card > span {
+  color: var(--vax-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.vax-admin-page .vax-stat-card strong {
+  color: var(--vax-navy);
+  font-size: 30px;
+  font-weight: 780;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.vax-admin-page .vax-stat-card small {
+  color: #8a97a7;
+  font-size: 10px;
+}
+
+.vax-admin-page .vax-stat-warning {
+  border-left: 3px solid #dfa32f;
+}
+
+.vax-admin-page .vax-stat-success {
+  border-left: 3px solid #26976c;
+}
+
+.vax-admin-page .vax-stat-danger {
+  border-left: 3px solid #d45d5d;
+}
+
+/* =====================================================
+   REVIEW QUEUE
+===================================================== */
+
+.vax-admin-page .vax-review-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 21px 23px;
+  margin: 0 0 25px;
+  background: linear-gradient(110deg, #eef6fc, #f7fbfe);
+  border: 1px solid #dce9f4;
+  border-radius: 12px;
+}
+
+.vax-admin-page .vax-review-summary-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  color: var(--vax-blue);
+  background: #fff;
+  border: 1px solid #dce9f4;
+  border-radius: 11px;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.vax-admin-page .vax-review-summary-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.vax-admin-page .vax-review-summary-copy h2 {
+  font-size: 17px;
+}
+
+.vax-admin-page .vax-review-summary-copy > p:last-child {
+  margin: 6px 0 0;
+  color: var(--vax-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.vax-admin-page .vax-review-summary-count {
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vax-admin-page .vax-review-summary-count strong {
+  color: var(--vax-navy);
+  font-size: 27px;
+  font-weight: 780;
+  line-height: 1.1;
+}
+
+.vax-admin-page .vax-review-summary-count span {
+  margin-top: 5px;
+  color: var(--vax-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+/* =====================================================
+   ALERTS
+===================================================== */
+
+.vax-admin-page .vax-admin-alert {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+  margin: 0 0 15px;
+  border-radius: 9px;
+}
+
+.vax-admin-page .vax-admin-alert p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.vax-admin-page .vax-admin-alert button {
+  flex-shrink: 0;
+  padding: 3px 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.vax-admin-page .vax-alert-error {
+  color: #a52828;
+  background: #fff4f2;
+  border: 1px solid #f0d2ce;
+}
+
+.vax-admin-page .vax-alert-success {
+  color: #176b45;
+  background: #effaf3;
+  border: 1px solid #c8e8d4;
+}
+
+/* =====================================================
+   VACCINE DIRECTORY
+===================================================== */
+
+.vax-admin-page .vax-directory-section {
+  min-width: 0;
+  padding-top: 26px;
+  border-top: 1px solid var(--vax-border);
+}
+
+.vax-admin-page .vax-directory-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 19px;
+}
+
+.vax-admin-page .vax-directory-heading > div:first-child > p:last-child {
+  margin: 7px 0 0;
+  color: var(--vax-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.vax-admin-page .vax-result-count {
+  flex-shrink: 0;
+  color: var(--vax-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vax-admin-page .vax-result-count strong {
+  color: var(--vax-navy);
+  font-size: 19px;
+  font-weight: 780;
+}
+
+/* =====================================================
+   SEARCH AND FILTERS
+===================================================== */
+
+.vax-admin-page .vax-admin-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 185px 185px;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+
+.vax-admin-page .vax-search-field {
+  min-width: 0;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid var(--vax-border);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vax-admin-page .vax-search-field > span {
+  flex-shrink: 0;
+  color: #8192a5;
+  font-size: 21px;
+}
+
+.vax-admin-page .vax-search-field input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 0;
+  color: var(--vax-navy);
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-size: 12px;
+}
+
+.vax-admin-page .vax-search-field input::placeholder {
+  color: #98a5b3;
+}
+
+.vax-admin-page .vax-search-field:focus-within {
+  border-color: var(--vax-blue);
+  box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.09);
+}
+
+.vax-admin-page .vax-admin-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 45px;
+  padding: 0 12px;
+  color: var(--vax-navy);
+  background: #fff;
+  border: 1px solid var(--vax-border);
+  border-radius: 8px;
+  outline: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.vax-admin-page .vax-admin-filters select:focus {
+  border-color: var(--vax-blue);
+  box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.08);
+}
+
+/* =====================================================
+   VACCINE RECORD CARDS
+===================================================== */
+
+.vax-admin-page .vax-record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vax-admin-page .vax-record-card {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--vax-border);
+  border-radius: 11px;
+  box-shadow: 0 2px 7px rgba(20, 48, 73, 0.025);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vax-admin-page .vax-record-card:hover {
+  border-color: #c5d8e8;
+  box-shadow: 0 5px 17px rgba(20, 48, 73, 0.055);
+}
+
+.vax-admin-page .vax-record-main {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.vax-admin-page .vax-record-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  background: #edf5fb;
+  border: 1px solid #e2edf5;
+  border-radius: 10px;
+  font-size: 22px;
+}
+
+.vax-admin-page .vax-record-information {
+  min-width: 0;
+  flex: 1;
+}
+
+.vax-admin-page .vax-record-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.vax-admin-page .vax-record-title-row h3 {
+  margin: 0;
+  color: var(--vax-navy);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.vax-admin-page .vax-record-full-name {
+  margin: 5px 0 0;
+  color: #64778b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.vax-admin-page .vax-record-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.vax-admin-page .vax-record-meta span {
+  padding: 5px 9px;
+  color: #53677b;
+  background: #f1f5f8;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.vax-admin-page .vax-record-purpose,
+.vax-admin-page .vax-record-age {
+  margin: 11px 0 0;
+  color: var(--vax-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.vax-admin-page .vax-record-age strong {
+  color: var(--vax-navy);
+}
+
+.vax-admin-page .vax-record-source,
+.vax-admin-page .vax-record-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 15px;
+  margin-top: 10px;
+  color: #7a8999;
+  font-size: 10px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.vax-admin-page .vax-record-source a {
+  color: var(--vax-blue);
+  font-weight: 700;
+}
+
+.vax-admin-page .vax-record-source a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================
+   REVIEW STATUS
+===================================================== */
+
+.vax-admin-page .vax-review-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.vax-admin-page .vax-status-pending {
+  color: #895e16;
+  background: #fff3d8;
+}
+
+.vax-admin-page .vax-status-verified {
+  color: #176b45;
+  background: #e6f6ed;
+}
+
+.vax-admin-page .vax-status-rejected {
+  color: #ad3333;
+  background: #fff0ef;
+}
+
+/* =====================================================
+   RECORD ACTIONS
+===================================================== */
+
+.vax-admin-page .vax-record-actions {
+  width: 178px;
+  flex: 0 0 178px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.vax-admin-page .vax-view-button {
+  width: 100%;
+  color: var(--vax-blue);
+  background: #f0f6fb;
+  border-color: #dce9f4;
+}
+
+.vax-admin-page .vax-view-button:hover {
+  background: #e5f0f8;
+}
+
+.vax-admin-page .vax-review-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.vax-admin-page .vax-review-buttons button {
+  width: 100%;
+  min-height: 37px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.vax-admin-page .vax-verify-button {
+  color: #fff;
+  background: var(--vax-blue);
+  border: 1px solid var(--vax-blue);
+}
+
+.vax-admin-page .vax-verify-button:hover {
+  background: var(--vax-blue-dark);
+}
+
+.vax-admin-page .vax-reject-button {
+  color: #a52c2c;
+  background: #fff;
+  border: 1px solid #e9c9c6;
+}
+
+.vax-admin-page .vax-reject-button:hover {
+  background: #fff4f3;
+}
+
+.vax-admin-page .vax-review-buttons button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* =====================================================
+   EMPTY AND LOADING STATES
+===================================================== */
+
+.vax-admin-page .vax-admin-empty {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 20px;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed #ccd8e3;
+  border-radius: 11px;
+}
+
+.vax-admin-page .vax-admin-empty h3 {
+  margin: 13px 0 6px;
+  color: var(--vax-navy);
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.vax-admin-page .vax-admin-empty p {
+  margin: 0 0 17px;
+  color: var(--vax-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.vax-admin-page .vax-empty-icon {
+  color: #8194a9;
+  font-size: 34px;
+}
+
+.vax-admin-page .vax-loading-indicator {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #dce7f1;
+  border-top-color: var(--vax-blue);
+  border-radius: 50%;
+  animation: vax-admin-spin 0.8s linear infinite;
+}
+
+@keyframes vax-admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+  .app.vax-admin-page {
+    width: calc(100% - 36px);
+  }
+
+  .vax-admin-page .vax-admin-statistics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vax-admin-page .vax-management-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .vax-admin-page .vax-action-buttons {
+    justify-content: flex-start;
+  }
+
+  .vax-admin-page .vax-admin-filters {
+    grid-template-columns: minmax(0, 1fr) 1fr;
+  }
+
+  .vax-admin-page .vax-search-field {
+    grid-column: 1 / -1;
+  }
+
+  .vax-admin-page .vax-record-card {
+    gap: 14px;
+  }
+
+  .vax-admin-page .vax-record-actions {
+    width: 155px;
+    flex-basis: 155px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+  .app.vax-admin-page {
+    width: calc(100% - 28px);
+    margin-top: 16px;
+    padding-bottom: 40px;
+  }
+
+  .vax-admin-page .vax-admin-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+    padding-bottom: 23px;
+  }
+
+  .vax-admin-page .vax-admin-breadcrumb {
+    margin-bottom: 20px;
+  }
+
+  .vax-admin-page .vax-admin-description {
+    font-size: 13px;
+  }
+
+  .vax-admin-page .vax-management-toolbar {
+    padding: 23px 0;
+  }
+
+  .vax-admin-page .vax-action-buttons {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vax-admin-page .vax-action-buttons > * {
+    width: 100%;
+  }
+
+  .vax-admin-page .vax-action-buttons > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .vax-admin-page .vax-section-heading,
+  .vax-admin-page .vax-directory-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .vax-admin-page .vax-review-summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 17px;
+  }
+
+  .vax-admin-page .vax-review-summary-copy {
+    flex: 1 1 calc(100% - 65px);
+  }
+
+  .vax-admin-page .vax-review-summary-count {
+    align-items: flex-start;
+    margin-left: 63px;
+  }
+
+  .vax-admin-page .vax-review-summary-count span {
+    text-align: left;
+  }
+
+  .vax-admin-page .vax-review-summary > .vax-outline-button {
+    width: 100%;
+  }
+
+  .vax-admin-page .vax-admin-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .vax-admin-page .vax-search-field {
+    grid-column: auto;
+  }
+
+  .vax-admin-page .vax-record-card {
+    flex-direction: column;
+    gap: 17px;
+    padding: 16px;
+  }
+
+  .vax-admin-page .vax-record-main {
+    width: 100%;
+  }
+
+  .vax-admin-page .vax-record-actions {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  .vax-admin-page .vax-review-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+  .app.vax-admin-page {
+    width: calc(100% - 22px);
+  }
+
+  .vax-admin-page .vax-admin-statistics {
+    gap: 9px;
+  }
+
+  .vax-admin-page .vax-stat-card {
+    padding: 14px 12px;
+  }
+
+  .vax-admin-page .vax-stat-card strong {
+    font-size: 25px;
+  }
+
+  .vax-admin-page .vax-record-main {
+    gap: 10px;
+  }
+
+  .vax-admin-page .vax-record-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    font-size: 19px;
+  }
+
+  .vax-admin-page .vax-review-buttons {
+    grid-template-columns: 1fr;
+  }
+}
