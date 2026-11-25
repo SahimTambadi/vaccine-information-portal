@@ -222,7 +222,6 @@ function AdminVaccineImport() {
     setLoadingId(vaccine.id);
 
     try {
-      // Check the database again immediately before inserting.
       const { data: existingRecords, error: checkError } =
         await supabase
           .from("vaccines")
@@ -360,6 +359,35 @@ function AdminVaccineImport() {
             <span>Available to import</span>
           </div>
         </div>
+      </section>
+
+      {/* WHO VACCINE PRODUCTS REVIEW ENTRY */}
+
+      <section className="who-import-entry">
+        <div className="who-import-entry-icon">
+          🌍
+        </div>
+
+        <div className="who-import-entry-content">
+          <span className="who-import-entry-label">
+            INTERNATIONAL PRODUCT DATABASE
+          </span>
+
+          <h2>WHO Vaccine Products</h2>
+
+          <p>
+            Browse and review imported WHO vaccine product records.
+            Check manufacturers, brands, prequalification details
+            and original sources before verification.
+          </p>
+        </div>
+
+        <Link
+          to="/admin/vaccines/who-products"
+          className="who-import-entry-button"
+        >
+          Open WHO Review Centre →
+        </Link>
       </section>
 
       <section className="vax-import-catalogue">

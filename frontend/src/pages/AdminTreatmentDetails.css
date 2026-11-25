@@ -1,0 +1,352 @@
+
+.admin-treatment-details-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+}
+
+.admin-treatment-details-container {
+  max-width: 1450px;
+  margin: 0 auto;
+}
+
+.admin-treatment-details-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #147cc1;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.admin-treatment-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.admin-treatment-details-eyebrow {
+  color: #1685c5;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.admin-treatment-details-header h1 {
+  margin: 9px 0;
+  font-size: 31px;
+  font-weight: 800;
+}
+
+.admin-treatment-details-header p {
+  color: #718096;
+  margin: 0;
+}
+
+.admin-treatment-details-status {
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.admin-treatment-details-status.pending {
+  background: #fff4dc;
+  color: #a86c00;
+}
+
+.admin-treatment-details-status.verified {
+  background: #e4f7ec;
+  color: #16804c;
+}
+
+.admin-treatment-details-status.rejected {
+  background: #ffeded;
+  color: #c23838;
+}
+
+.admin-treatment-details-alert {
+  margin-bottom: 20px;
+  padding: 14px 17px;
+  border-radius: 9px;
+  font-size: 14px;
+}
+
+.admin-treatment-details-alert.error {
+  background: #fff0f0;
+  color: #a52d2d;
+  border: 1px solid #f2caca;
+}
+
+.admin-treatment-details-alert.success {
+  background: #e9f8ef;
+  color: #137447;
+  border: 1px solid #c8ead5;
+}
+
+.admin-treatment-details-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  align-items: start;
+  gap: 22px;
+}
+
+.admin-treatment-details-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.admin-treatment-details-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+.admin-treatment-details-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid #e5ebf3;
+  border-radius: 13px;
+  box-shadow: 0 4px 16px rgba(23, 43, 77, 0.04);
+}
+
+.admin-treatment-details-card h2 {
+  margin: 0 0 20px;
+  color: #203b5d;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.admin-treatment-details-card h3 {
+  margin: 22px 0 9px;
+  color: #344563;
+  font-size: 15px;
+}
+
+.admin-treatment-details-card p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.admin-treatment-details-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.admin-treatment-details-info-grid div,
+.admin-treatment-details-source {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.admin-treatment-details-info-grid span,
+.admin-treatment-details-source span {
+  color: #8492a6;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-treatment-details-info-grid strong,
+.admin-treatment-details-source strong {
+  color: #263b57;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.admin-treatment-details-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #147cc1;
+}
+
+.admin-treatment-details-section-heading h2 {
+  margin-bottom: 20px;
+}
+
+.admin-treatment-details-medicines {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-treatment-medicine {
+  padding: 16px;
+  background: #f7f9fc;
+  border: 1px solid #e8eef5;
+  border-radius: 9px;
+}
+
+.admin-treatment-medicine div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-treatment-medicine strong {
+  color: #203b5d;
+}
+
+.admin-treatment-medicine span {
+  color: #718096;
+  font-size: 12px;
+}
+
+.admin-treatment-medicine p {
+  margin: 5px 0 0;
+}
+
+.admin-treatment-details-source a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #147cc1;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.admin-treatment-details-sidebar-description {
+  margin-top: -8px;
+}
+
+.admin-treatment-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 11px;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-treatment-action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-treatment-action.verify,
+.admin-treatment-action.publish {
+  background: #e7f8ee;
+  color: #137447;
+  border-color: #c9ebd7;
+}
+
+.admin-treatment-action.verify:hover,
+.admin-treatment-action.publish:hover {
+  background: #d5f1e0;
+}
+
+.admin-treatment-action.reject {
+  background: #fff0f0;
+  color: #bd3838;
+  border-color: #f3d0d0;
+}
+
+.admin-treatment-action.reject:hover {
+  background: #ffe2e2;
+}
+
+.admin-treatment-action.unpublish {
+  background: #fff5df;
+  color: #a86c00;
+  border-color: #f0dfb9;
+}
+
+.admin-treatment-action.refresh {
+  background: #edf5fc;
+  color: #17699e;
+  border-color: #d7e9f8;
+}
+
+.admin-treatment-action.delete {
+  background: white;
+  color: #bd3838;
+  border-color: #f0cccc;
+}
+
+.admin-treatment-details-rejected-note {
+  padding: 12px;
+  background: #fff4f4;
+  border-radius: 8px;
+  font-size: 12px !important;
+}
+
+.admin-treatment-details-processing {
+  text-align: center;
+  font-size: 12px !important;
+}
+
+.admin-treatment-details-loading,
+.admin-treatment-details-error {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 35px;
+  background: white;
+  border-radius: 13px;
+  text-align: center;
+  color: #64748b;
+}
+
+.admin-treatment-details-error h2 {
+  color: #203b5d;
+}
+
+.admin-treatment-details-error a {
+  display: inline-block;
+  margin-top: 15px;
+  color: #147cc1;
+  font-weight: 700;
+}
+
+@media (max-width: 950px) {
+  .admin-treatment-details-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-treatment-details-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-treatment-details-page {
+    padding: 25px 4%;
+  }
+
+  .admin-treatment-details-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-treatment-details-header h1 {
+    font-size: 25px;
+  }
+
+  .admin-treatment-details-info-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-treatment-details-card {
+    padding: 18px;
+  }
+}

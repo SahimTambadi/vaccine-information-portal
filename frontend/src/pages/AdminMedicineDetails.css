@@ -1,0 +1,337 @@
+
+/* =========================================
+   ADMIN MEDICINE DETAILS PAGE
+========================================= */
+
+.admin-medicine-details-page {
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  background: #f4f7fb;
+  color: #1e293b;
+}
+
+.admin-medicine-details-container {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+/* Back link */
+
+.admin-medicine-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin-medicine-back-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Header */
+
+.admin-medicine-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.admin-medicine-eyebrow {
+  margin: 0 0 8px;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.admin-medicine-details-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 30px;
+  line-height: 1.3;
+  font-weight: 750;
+}
+
+.admin-medicine-generic {
+  margin: 10px 0 0;
+  color: #64748b;
+  font-size: 15px;
+}
+
+.admin-medicine-status {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 16px;
+  padding: 7px 13px;
+  border-radius: 30px;
+  background: #fff7ed;
+  color: #c2410c;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Action buttons */
+
+.admin-medicine-detail-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-medicine-detail-actions button,
+.admin-medicine-detail-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 17px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.admin-medicine-detail-actions button:hover,
+.admin-medicine-detail-actions a:hover {
+  transform: translateY(-1px);
+}
+
+.admin-medicine-edit-button {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.admin-medicine-edit-button:hover {
+  background: #dbeafe;
+}
+
+.admin-medicine-publish-button {
+  background: #0f766e;
+  color: #ffffff;
+}
+
+.admin-medicine-publish-button:hover {
+  background: #115e59;
+}
+
+.admin-medicine-detail-actions button:not(
+  .admin-medicine-publish-button
+):not(.admin-medicine-delete-button) {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.admin-medicine-delete-button {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.admin-medicine-delete-button:hover {
+  background: #fee2e2;
+}
+
+/* Detail grid */
+
+.admin-medicine-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.admin-medicine-detail-card {
+  min-width: 0;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.035);
+}
+
+.admin-medicine-detail-card h2 {
+  margin: 0 0 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.admin-medicine-detail-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.admin-medicine-detail-fields > div {
+  min-width: 0;
+}
+
+.admin-medicine-detail-fields strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.admin-medicine-detail-fields p {
+  margin: 0;
+  color: #1e293b;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* Individual sections */
+
+.admin-medicine-detail-section {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0f5;
+}
+
+.admin-medicine-detail-section h3 {
+  margin: 0 0 9px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin-medicine-detail-section p {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Source information */
+
+.admin-medicine-source-card {
+  margin-top: 22px;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.035);
+}
+
+.admin-medicine-source-card h2 {
+  margin: 0 0 20px;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.admin-medicine-source-card a {
+  color: #2563eb;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.admin-medicine-source-card a:hover {
+  color: #1d4ed8;
+}
+
+.admin-medicine-review-note {
+  margin-top: 22px;
+  padding: 17px 20px;
+  border: 1px solid #fed7aa;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Loading and error messages */
+
+.admin-medicine-details-message,
+.admin-medicine-details-error {
+  max-width: 700px;
+  margin: 70px auto;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.admin-medicine-details-message {
+  background: #ffffff;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.admin-medicine-details-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* Responsive layout */
+
+@media (max-width: 768px) {
+  .admin-medicine-details-page {
+    padding: 24px 14px 40px;
+  }
+
+  .admin-medicine-details-header {
+    padding: 22px;
+  }
+
+  .admin-medicine-details-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-medicine-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-medicine-detail-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-medicine-detail-card,
+  .admin-medicine-source-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-medicine-detail-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-medicine-detail-actions {
+    width: 100%;
+  }
+
+  .admin-medicine-detail-actions button,
+  .admin-medicine-detail-actions a {
+    flex: 1;
+  }
+}

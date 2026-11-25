@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
+import "./AdminMedicines.css";
 
 function AdminMedicines() {
   const [medicines, setMedicines] = useState([]);
@@ -23,8 +24,11 @@ function AdminMedicines() {
         category,
         source_name,
         source_url,
+        source_record_id,
+        data_origin,
+        review_status,
         last_reviewed_at,
-        is_published,
+        last_synced_at,
         created_at,
         updated_at
       `)
@@ -32,11 +36,9 @@ function AdminMedicines() {
 
     if (error) {
       console.error("Admin medicine fetch error:", error);
-
       setError(
         "Unable to load medicine records. Check your administrator permissions and database policies."
       );
-
       setMedicines([]);
     } else {
       setMedicines(data || []);
@@ -52,8 +54,11 @@ function AdminMedicines() {
   const counts = useMemo(
     () => ({
       all: medicines.length,
-      published: medicines.filter((item) => item.is_published).length,
-      unpublished: medicines.filter((item) => !item.is_published).length,
+      pending: medicines.filter(item => item.review_status === "pending").length,
+      verified: medicines.filter(item => item.review_status === "verified").length,
+      rejected: medicines.filter(item => item.review_status === "rejected").length,
+      manual: medicines.filter(item => item.data_origin === "manual").length,
+      imported: medicines.filter(item => item.data_origin === "imported").length,
     }),
     [medicines]
   );
@@ -61,20 +66,21 @@ function AdminMedicines() {
   const filteredMedicines = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    return medicines.filter((medicine) => {
+    return medicines.filter(medicine => {
       const matchesSearch = [
         medicine.name,
         medicine.generic_name,
         medicine.category,
         medicine.source_name,
+        medicine.source_record_id,
       ]
         .filter(Boolean)
-        .some((value) => String(value).toLowerCase().includes(query));
+        .some(value => String(value).toLowerCase().includes(query));
 
       const matchesFilter =
         filter === "all" ||
-        (filter === "published" && medicine.is_published) ||
-        (filter === "unpublished" && !medicine.is_published);
+        medicine.review_status === filter ||
+        medicine.data_origin === filter;
 
       return matchesSearch && matchesFilter;
     });
@@ -94,21 +100,22 @@ function AdminMedicines() {
     });
   }
 
+  function formatStatus(status) {
+    if (!status) return "Pending";
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  }
+
   return (
     <main className="admin-medicines-page">
-      {/* HEADER */}
-
       <section className="admin-medicines-hero">
         <div>
           <span className="admin-medicines-eyebrow">
             VAXCARE ADMINISTRATION
           </span>
-
           <h1>Medicine Management</h1>
-
           <p>
-            Review medicine records, publication status and medical
-            reference information.
+            Manage medicine records, review their medical references
+            and control which records are available to the public.
           </p>
         </div>
 
@@ -117,57 +124,70 @@ function AdminMedicines() {
         </div>
       </section>
 
-      {/* OVERVIEW */}
-
       <section className="admin-medicines-content">
+        {/* ACTIONS */}
         <div className="admin-medicines-heading-actions">
-  <Link
-    to="/admin/medicines/new"
-    className="admin-medicine-add-button"
-  >
-    + Add Medicine
-  </Link>
+          <Link
+            to="/admin/medicines/new"
+            className="admin-medicine-add-button"
+          >
+            + Add Medicine
+          </Link>
 
-  <button
-    type="button"
-    className="admin-medicines-refresh"
-    onClick={fetchMedicines}
-    disabled={loading}
-  >
-    ↻ Refresh
-  </button>
-</div>
+          <Link
+            to="/admin/medicines/import"
+            className="admin-medicine-add-button"
+          >
+            Import Medicines
+          </Link>
+
+          <button
+            type="button"
+            className="admin-medicines-refresh"
+            onClick={fetchMedicines}
+            disabled={loading}
+          >
+            ↻ Refresh
+          </button>
+        </div>
 
         {/* STATISTICS */}
-
         <div className="admin-medicine-stats">
           <article className="admin-medicine-stat">
             <span>Total Records</span>
             <strong>{loading ? "—" : counts.all}</strong>
           </article>
-
           <article className="admin-medicine-stat">
-            <span>Published</span>
-            <strong>{loading ? "—" : counts.published}</strong>
+            <span>Pending Review</span>
+            <strong>{loading ? "—" : counts.pending}</strong>
           </article>
-
           <article className="admin-medicine-stat">
-            <span>Unpublished</span>
-            <strong>{loading ? "—" : counts.unpublished}</strong>
+            <span>Verified</span>
+            <strong>{loading ? "—" : counts.verified}</strong>
+          </article>
+          <article className="admin-medicine-stat">
+            <span>Rejected</span>
+            <strong>{loading ? "—" : counts.rejected}</strong>
+          </article>
+          <article className="admin-medicine-stat">
+            <span>Manual Records</span>
+            <strong>{loading ? "—" : counts.manual}</strong>
+          </article>
+          <article className="admin-medicine-stat">
+            <span>Imported Records</span>
+            <strong>{loading ? "—" : counts.imported}</strong>
           </article>
         </div>
 
         {/* SEARCH AND FILTER */}
-
         <section className="admin-medicine-toolbar">
           <div className="admin-medicine-search">
             <span>⌕</span>
-
             <input
               type="search"
               placeholder="Search name, generic name, category or source..."
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              onChange={event => setSearch(event.target.value)}
               aria-label="Search medicine records"
             />
           </div>
@@ -175,9 +195,12 @@ function AdminMedicines() {
           <div className="admin-medicine-filters">
             {[
               { value: "all", label: "All Records" },
-              { value: "published", label: "Published" },
-              { value: "unpublished", label: "Unpublished" },
-            ].map((item) => (
+              { value: "pending", label: "Pending" },
+              { value: "verified", label: "Verified" },
+              { value: "rejected", label: "Rejected" },
+              { value: "manual", label: "Manual" },
+              { value: "imported", label: "Imported" },
+            ].map(item => (
               <button
                 type="button"
                 key={item.value}
@@ -194,20 +217,15 @@ function AdminMedicines() {
           </div>
         </section>
 
-        {/* ERROR */}
-
         {error && (
           <div className="admin-medicine-error" role="alert">
             <strong>Unable to load records</strong>
             <p>{error}</p>
-
             <button type="button" onClick={fetchMedicines}>
               Try Again
             </button>
           </div>
         )}
-
-        {/* LOADING */}
 
         {loading && (
           <div className="admin-medicine-state">
@@ -216,26 +234,21 @@ function AdminMedicines() {
           </div>
         )}
 
-        {/* MEDICINE TABLE */}
-
         {!loading && !error && (
           <section className="admin-medicine-table-section">
             <div className="admin-medicine-table-heading">
               <h3>Medicine Database</h3>
-
               <span>{filteredMedicines.length} record(s)</span>
             </div>
 
             {filteredMedicines.length === 0 ? (
               <div className="admin-medicine-empty">
                 <div>💊</div>
-
                 <h3>No medicine records found</h3>
-
                 <p>
                   {medicines.length === 0
                     ? "Your database currently has no medicine records."
-                    : "Try changing your search or publication filter."}
+                    : "Try changing your search or review filter."}
                 </p>
               </div>
             ) : (
@@ -246,50 +259,40 @@ function AdminMedicines() {
                       <th>Medicine</th>
                       <th>Category</th>
                       <th>Reference Source</th>
+                      <th>Data Origin</th>
                       <th>Last Reviewed</th>
-                      <th>Status</th>
+                      <th>Review Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {filteredMedicines.map((medicine) => (
+                    {filteredMedicines.map(medicine => (
                       <tr key={medicine.id}>
                         <td>
                           <strong>{medicine.name}</strong>
-
                           <span className="admin-medicine-generic">
                             {medicine.generic_name ||
                               "Generic name not provided"}
                           </span>
                         </td>
-
+                        <td>{medicine.category || "Not categorized"}</td>
+                        <td>{medicine.source_name || "Source not provided"}</td>
                         <td>
-                          {medicine.category || "Not categorized"}
-                        </td>
-
-                        <td>
-                          {medicine.source_name || "Source not provided"}
-                        </td>
-
-                        <td>
-                          {formatDate(medicine.last_reviewed_at)}
-                        </td>
-
-                        <td>
-                          <span
-                            className={
-                              medicine.is_published
-                                ? "admin-medicine-status published"
-                                : "admin-medicine-status unpublished"
-                            }
-                          >
-                            {medicine.is_published
-                              ? "Published"
-                              : "Unpublished"}
+                          <span className="admin-medicine-origin">
+                            {medicine.data_origin === "imported"
+                              ? "Imported"
+                              : "Manual"}
                           </span>
                         </td>
-
+                        <td>{formatDate(medicine.last_reviewed_at)}</td>
+                        <td>
+                          <span
+                            className={`admin-medicine-status ${medicine.review_status || "pending"}`}
+                          >
+                            {formatStatus(medicine.review_status)}
+                          </span>
+                        </td>
                         <td>
                           <Link
                             to={`/admin/medicines/${medicine.id}`}
@@ -308,16 +311,14 @@ function AdminMedicines() {
           </section>
         )}
 
-        {/* INFORMATION NOTE */}
-
         <div className="admin-medicine-note">
           <span>ⓘ</span>
-
           <p>
-            <strong>Publication responsibility:</strong> Medicine
-            information should only be published after checking its
-            accuracy against a trustworthy medical reference. Review
-            the complete record and its source before publishing.
+            <strong>Medical review responsibility:</strong> Medicine
+            records should only be verified after checking their
+            accuracy against trustworthy medical references.
+            Pending and rejected records must not be presented as
+            verified public information.
           </p>
         </div>
 

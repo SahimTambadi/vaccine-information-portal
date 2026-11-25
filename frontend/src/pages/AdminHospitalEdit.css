@@ -1,0 +1,276 @@
+
+.admin-hospital-edit-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+}
+
+.admin-hospital-edit-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hospital-edit-back {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hospital-edit-back:hover {
+  text-decoration: underline;
+}
+
+.hospital-edit-header {
+  margin-bottom: 30px;
+}
+
+.hospital-edit-eyebrow {
+  margin-bottom: 8px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.hospital-edit-header h1 {
+  margin: 0 0 10px;
+  color: #172b4d;
+  font-size: 30px;
+}
+
+.hospital-edit-header p:last-child {
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.hospital-edit-card {
+  margin-bottom: 22px;
+  padding: 26px;
+  border: 1px solid #e5ebf4;
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(30, 55, 90, 0.04);
+}
+
+.hospital-edit-card h2 {
+  margin: 0 0 22px;
+  color: #172b4d;
+  font-size: 19px;
+}
+
+.hospital-edit-description {
+  margin: -10px 0 20px;
+  color: #8492a6;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hospital-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.hospital-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hospital-edit-field.full {
+  grid-column: 1 / -1;
+}
+
+.hospital-edit-field label {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hospital-edit-field input,
+.hospital-edit-field select,
+.hospital-edit-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dce5f2;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #172b4d;
+  font-family: inherit;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.hospital-edit-field input:focus,
+.hospital-edit-field select:focus,
+.hospital-edit-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.09);
+}
+
+.hospital-edit-field textarea {
+  resize: vertical;
+  min-height: 85px;
+}
+
+.hospital-edit-field small {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+/* SPECIALIZATIONS */
+
+.hospital-specialization-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hospital-specialization-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e5ebf4;
+  border-radius: 8px;
+  background: #fafcff;
+  color: #475569;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.hospital-specialization-option:hover {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.hospital-specialization-option input {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+/* NOTES AND ERRORS */
+
+.hospital-edit-note {
+  margin: 18px 0 0;
+  padding: 13px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.hospital-edit-error {
+  margin-bottom: 20px;
+  padding: 14px;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* FOOTER */
+
+.hospital-edit-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0 35px;
+}
+
+.hospital-edit-cancel,
+.hospital-edit-submit {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.hospital-edit-cancel {
+  border: 1px solid #dce5f2;
+  background: #ffffff;
+  color: #64748b;
+}
+
+.hospital-edit-cancel:hover {
+  background: #f8fafc;
+}
+
+.hospital-edit-submit {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.hospital-edit-submit:hover {
+  background: #1d4ed8;
+}
+
+.hospital-edit-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .admin-hospital-edit-page {
+    padding: 25px 4%;
+  }
+
+  .hospital-edit-header h1 {
+    font-size: 25px;
+  }
+
+  .hospital-edit-card {
+    padding: 20px;
+  }
+
+  .hospital-specialization-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .hospital-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hospital-edit-field.full {
+    grid-column: auto;
+  }
+
+  .hospital-specialization-options {
+    grid-template-columns: 1fr;
+  }
+
+  .hospital-edit-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .hospital-edit-cancel,
+  .hospital-edit-submit {
+    width: 100%;
+  }
+}

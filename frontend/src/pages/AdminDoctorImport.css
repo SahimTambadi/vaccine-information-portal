@@ -1,0 +1,504 @@
+
+/* =========================================
+   VAXCARE - ADMIN DOCTOR IMPORT
+========================================= */
+
+.admin-doctor-import-page {
+  min-height: 100vh;
+  padding: 34px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER */
+
+.admin-doctor-import-header {
+  margin-bottom: 30px;
+}
+
+.admin-doctor-import-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.admin-doctor-import-back:hover {
+  color: #2563eb;
+}
+
+.admin-doctor-import-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-doctor-import-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.admin-doctor-import-heading h1 {
+  margin: 0 0 10px;
+  color: #10254d;
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+}
+
+.admin-doctor-import-heading p {
+  max-width: 650px;
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.admin-doctor-import-manual {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 19px;
+  border-radius: 9px;
+  background: #102f68;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.admin-doctor-import-manual:hover {
+  background: #17458f;
+  transform: translateY(-2px);
+}
+
+/* SUMMARY STATS */
+
+.admin-doctor-import-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+  margin-bottom: 24px;
+}
+
+.admin-doctor-import-stats > div {
+  padding: 21px;
+  border: 1px solid #e5ebf4;
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(16, 37, 77, 0.035);
+}
+
+.admin-doctor-import-stats span {
+  display: block;
+  margin-bottom: 10px;
+  color: #8290a5;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-doctor-import-stats strong {
+  color: #10254d;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* NOTIFICATIONS */
+
+.admin-doctor-import-success,
+.admin-doctor-import-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 17px;
+  padding: 14px 17px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admin-doctor-import-success {
+  border: 1px solid #b9e8ce;
+  background: #effaf3;
+  color: #187344;
+}
+
+.admin-doctor-import-error {
+  border: 1px solid #f1c5c5;
+  background: #fff3f3;
+  color: #b42318;
+}
+
+.admin-doctor-import-success svg,
+.admin-doctor-import-error svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* REVIEW NOTICE */
+
+.admin-doctor-import-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px 18px;
+  border: 1px solid #f1dfad;
+  border-radius: 11px;
+  background: #fffaf0;
+  color: #8a6116;
+}
+
+.admin-doctor-import-notice svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.admin-doctor-import-notice p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* SEARCH AND FILTERS */
+
+.admin-doctor-import-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 17px;
+  border: 1px solid #e5ebf4;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.admin-doctor-import-search {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 220px;
+  gap: 10px;
+  padding: 0 13px;
+  border: 1px solid #dce4ef;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.admin-doctor-import-search svg {
+  flex-shrink: 0;
+  color: #8b9bb1;
+}
+
+.admin-doctor-import-search input {
+  width: 100%;
+  min-width: 0;
+  height: 43px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #172b4d;
+  font-size: 13px;
+}
+
+.admin-doctor-import-toolbar select {
+  min-width: 190px;
+  height: 45px;
+  padding: 0 12px;
+  border: 1px solid #dce4ef;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #344563;
+  font-size: 13px;
+}
+
+.admin-doctor-import-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 45px;
+  padding: 0 15px;
+  border: 1px solid #dce4ef;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #344563;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.admin-doctor-import-toolbar button:hover {
+  background: #f1f5fb;
+}
+
+.admin-doctor-import-toolbar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* RESULTS */
+
+.admin-doctor-import-results {
+  margin-bottom: 15px;
+  color: #8290a5;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* DOCTOR GRID */
+
+.admin-doctor-import-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 19px;
+}
+
+/* DOCTOR CARD */
+
+.admin-doctor-import-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid #e5ebf4;
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(16, 37, 77, 0.035);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-doctor-import-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 24px rgba(16, 37, 77, 0.075);
+}
+
+.admin-doctor-import-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.admin-doctor-import-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 11px;
+  background: #edf4ff;
+  color: #2563eb;
+}
+
+.admin-doctor-import-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.admin-doctor-import-status.available {
+  background: #eaf7ef;
+  color: #23804b;
+}
+
+.admin-doctor-import-status.duplicate {
+  background: #fff3df;
+  color: #a8660b;
+}
+
+.admin-doctor-import-status.imported {
+  background: #edf1f7;
+  color: #64748b;
+}
+
+.admin-doctor-import-card h3 {
+  margin: 0 0 7px;
+  color: #172b4d;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.admin-doctor-import-specialty {
+  margin: 0 0 8px;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-doctor-import-qualification {
+  margin: 0 0 9px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.admin-doctor-import-experience {
+  margin: 0 0 12px;
+  color: #344563;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.admin-doctor-import-experience span {
+  display: block;
+  margin-top: 3px;
+  color: #9a7b39;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.admin-doctor-import-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #edf0f5;
+}
+
+.admin-doctor-import-meta p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  color: #718096;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.admin-doctor-import-meta svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #8290a5;
+}
+
+.admin-doctor-import-source {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 14px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-doctor-import-source:hover {
+  text-decoration: underline;
+}
+
+/* IMPORT BUTTON */
+
+.admin-doctor-import-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 43px;
+  margin-top: 15px;
+  padding: 10px 13px;
+  border: none;
+  border-radius: 8px;
+  background: #102f68;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.admin-doctor-import-button:hover:not(:disabled) {
+  background: #1b4b98;
+}
+
+.admin-doctor-import-button:disabled {
+  background: #e7ecf3;
+  color: #8290a5;
+  cursor: not-allowed;
+}
+
+/* LOADING AND EMPTY STATES */
+
+.admin-doctor-import-state {
+  padding: 55px 20px;
+  border: 1px dashed #d5deea;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #8290a5;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .admin-doctor-import-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-doctor-import-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-doctor-import-page {
+    padding: 25px 4%;
+  }
+
+  .admin-doctor-import-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-doctor-import-search {
+    min-width: 0;
+  }
+
+  .admin-doctor-import-toolbar select,
+  .admin-doctor-import-toolbar button {
+    width: 100%;
+  }
+
+  .admin-doctor-import-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-doctor-import-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .admin-doctor-import-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-doctor-import-card {
+    padding: 17px;
+  }
+}

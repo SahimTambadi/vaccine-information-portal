@@ -4,32 +4,104 @@ import {
   Routes,
   Route,
   Link,
-  Navigate,
 } from "react-router-dom";
 
 import "./App.css";
 
+// ==========================================
+// PUBLIC PAGES
+// ==========================================
+
 import Vaccines from "./pages/Vaccines";
 import VaccineDetails from "./pages/VaccineDetails";
+
 import Medicines from "./pages/Medicines";
 import MedicineDetails from "./pages/MedicineDetails";
+
+import Diseases from "./pages/Diseases";
+import DiseaseDetails from "./pages/DiseaseDetails";
+
+import Doctors from "./pages/Doctors";
+import DoctorDetails from "./pages/DoctorDetails";
+
+import Treatments from "./pages/Treatments";
+import TreatmentDetails from "./pages/TreatmentDetails";
+
+import Hospitals from "./pages/Hospitals";
+import HospitalDetails from "./pages/HospitalDetails";
+
+import AdminWHOProducts from "./pages/AdminWHOProducts";
+// ==========================================
+// ADMIN MEDICINE PAGES
+// ==========================================
+
 import AdminMedicines from "./pages/AdminMedicines";
 import AdminMedicineDetails from "./pages/AdminMedicineDetails";
 import AdminMedicineEdit from "./pages/AdminMedicineEdit";
+import AdminMedicineImport from "./pages/AdminMedicineImport";
+
+// ==========================================
+// ADMIN DISEASE PAGES
+// ==========================================
+
+import AdminDiseases from "./pages/AdminDiseases";
+import AdminDiseaseDetails from "./pages/AdminDiseaseDetails";
+import AdminDiseaseEdit from "./pages/AdminDiseaseEdit";
+import AdminDiseaseImport from "./pages/AdminDiseaseImport";
+
+// ==========================================
+// ADMIN DOCTOR PAGES
+// ==========================================
+
+import AdminDoctors from "./pages/AdminDoctors";
+import AdminDoctorEdit from "./pages/AdminDoctorEdit";
+import AdminDoctorImport from "./pages/AdminDoctorImport";
+import AdminDoctorDetails from "./pages/AdminDoctorDetails";
+
+// ==========================================
+// ADMIN TREATMENT PAGES
+// ==========================================
+
+import AdminTreatments from "./pages/AdminTreatments";
+import AdminAddTreatment from "./pages/AdminAddTreatment";
+import AdminTreatmentDetails from "./pages/AdminTreatmentDetails";
+import AdminTreatmentImport from "./pages/AdminTreatmentImport";
+// ==========================================
+// ADMIN VACCINE PAGES
+// ==========================================
+
 import AdminVaccineImport from "./pages/AdminVaccineImport";
+import AdminVaccines from "./pages/AdminVaccines";
+import AdminVaccineDetails from "./pages/AdminVaccineDetails";
+import AdminVaccineEdit from "./pages/AdminVaccineEdit";
+
+// ==========================================
+// ADMIN HOSPITAL PAGES
+// ==========================================
+
+import AdminHospitals from "./pages/AdminHospitals";
+import AdminHospitalEdit from "./pages/AdminHospitalEdit";
+import AdminHospitalDetails from "./pages/AdminHospitalDetails";
+import AdminHospitalImport from "./pages/AdminHospitalImport";
+
+// ==========================================
+// SHARED COMPONENTS
+// ==========================================
 
 import MainLayout from "./components/MainLayout";
+import GlobalSearch from "./components/GlobalSearch";
+
 import About from "./pages/About";
 import { supabase } from "./lib/supabaseClient";
+
+// ==========================================
+// AUTHENTICATION PAGES
+// ==========================================
 
 import Login from "./pages/login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-
-import AdminVaccines from "./pages/AdminVaccines";
-import AdminVaccineDetails from "./pages/AdminVaccineDetails";
-import AdminVaccineEdit from "./pages/AdminVaccineEdit";
 
 // ==========================================
 // ADMIN ROUTE PROTECTION
@@ -37,38 +109,90 @@ import AdminVaccineEdit from "./pages/AdminVaccineEdit";
 
 function AdminRoute({ children }) {
   const [status, setStatus] = useState("checking");
+  const [diagnostic, setDiagnostic] = useState("");
 
   useEffect(() => {
     let active = true;
 
     async function verifyAdmin() {
-      const {
-        data: userData,
-        error: userError,
-      } = await supabase.auth.getUser();
+      try {
+        const {
+          data: userData,
+          error: userError,
+        } = await supabase.auth.getUser();
 
-      if (userError || !userData.user) {
-        if (active) setStatus("denied");
-        return;
+        if (userError) {
+          console.error("Admin authentication error:", userError);
+
+          if (active) {
+            setDiagnostic(userError.message);
+            setStatus("denied");
+          }
+
+          return;
+        }
+
+        if (!userData.user) {
+          if (active) {
+            setDiagnostic("No authenticated user found. Please log in.");
+            setStatus("denied");
+          }
+
+          return;
+        }
+
+        const {
+          data: roleData,
+          error: roleError,
+        } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userData.user.id)
+          .maybeSingle();
+
+        if (!active) return;
+
+        if (roleError) {
+          console.error("Admin role query error:", roleError);
+
+          setDiagnostic(
+            `Unable to verify admin role: ${roleError.message}`
+          );
+
+          setStatus("denied");
+          return;
+        }
+
+        if (!roleData) {
+          setDiagnostic(
+            "No user_roles record was found for your logged-in account."
+          );
+
+          setStatus("denied");
+          return;
+        }
+
+        if (roleData.role !== "admin") {
+          setDiagnostic(
+            `Your database role is "${roleData.role}", not "admin".`
+          );
+
+          setStatus("denied");
+          return;
+        }
+
+        setStatus("allowed");
+      } catch (error) {
+        console.error("Admin verification failed:", error);
+
+        if (active) {
+          setDiagnostic(
+            error.message || "Unexpected verification error."
+          );
+
+          setStatus("denied");
+        }
       }
-
-      const {
-        data: roleData,
-        error: roleError,
-      } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", userData.user.id)
-        .maybeSingle();
-
-      if (!active) return;
-
-      if (roleError || roleData?.role !== "admin") {
-        setStatus("denied");
-        return;
-      }
-
-      setStatus("allowed");
     }
 
     verifyAdmin();
@@ -87,10 +211,16 @@ function AdminRoute({ children }) {
   }
 
   if (status === "denied") {
-    return <Navigate to="/vaccines" replace />;
+    return (
+      <div className="app">
+        <h2>Administrator Verification Failed</h2>
+        <p>{diagnostic}</p>
+        <p>Please share this message so we can fix the correct issue.</p>
+      </div>
+    );
   }
 
-  return children || <AdminDashboard />;
+  return children;
 }
 
 // ==========================================
@@ -100,6 +230,8 @@ function AdminRoute({ children }) {
 function AdminDashboard() {
   const [totalVaccines, setTotalVaccines] = useState(0);
   const [totalMedicines, setTotalMedicines] = useState(0);
+  const [totalDiseases, setTotalDiseases] = useState(0);
+
   const [adminEmail, setAdminEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -118,6 +250,7 @@ function AdminDashboard() {
           setError("Unable to load administrator information.");
           setLoading(false);
         }
+
         return;
       }
 
@@ -128,6 +261,7 @@ function AdminDashboard() {
       const [
         { count: vaccineCount, error: vaccineError },
         { count: medicineCount, error: medicineError },
+        { count: diseaseCount, error: diseaseError },
       ] = await Promise.all([
         supabase
           .from("vaccines")
@@ -136,11 +270,21 @@ function AdminDashboard() {
         supabase
           .from("medicines")
           .select("*", { count: "exact", head: true }),
+
+        supabase
+          .from("diseases")
+          .select("*", { count: "exact", head: true }),
       ]);
 
       if (!active) return;
 
-      if (vaccineError || medicineError) {
+      if (vaccineError || medicineError || diseaseError) {
+        console.error("Dashboard statistics error:", {
+          vaccineError,
+          medicineError,
+          diseaseError,
+        });
+
         setError(
           "Some platform statistics could not be loaded. Check database permissions."
         );
@@ -148,6 +292,8 @@ function AdminDashboard() {
 
       setTotalVaccines(vaccineCount || 0);
       setTotalMedicines(medicineCount || 0);
+      setTotalDiseases(diseaseCount || 0);
+
       setLoading(false);
     }
 
@@ -241,6 +387,22 @@ function AdminDashboard() {
         </div>
 
         <div className="vaccine-card">
+          <div className="vaccine-icon">🦠</div>
+
+          <span className="category">
+            DISEASE DATABASE
+          </span>
+
+          <h3>
+            {loading ? "Loading..." : totalDiseases}
+          </h3>
+
+          <p>
+            Total disease records in your database.
+          </p>
+        </div>
+
+        <div className="vaccine-card">
           <div className="vaccine-icon">👤</div>
 
           <span className="category">
@@ -256,63 +418,105 @@ function AdminDashboard() {
 
       </section>
 
-      
-   
-{/* QUICK ACTIONS */}
+      {/* QUICK ACTIONS */}
 
-<section className="search-section">
-  <div>
-    <p className="eyebrow">QUICK ACTIONS</p>
-    <h2>Manage Your Platform</h2>
-    <p>
-      Select a healthcare module to view and manage its records.
-    </p>
-  </div>
-</section>
+      <section className="search-section">
+        <div>
+          <p className="eyebrow">QUICK ACTIONS</p>
+          <h2>Manage Your Platform</h2>
+          <p>
+            Select a healthcare module to view and manage its records.
+          </p>
+        </div>
+      </section>
 
-<section className="vaccine-grid">
+      <section className="vaccine-grid">
 
-  <Link
-    to="/admin/vaccines"
-    className="vaccine-card admin-module-card"
-  >
-    <div className="vaccine-icon">💉</div>
+        <Link
+          to="/admin/vaccines"
+          className="vaccine-card admin-module-card"
+        >
+          <div className="vaccine-icon">💉</div>
+          <span className="category">VACCINE DATABASE</span>
+          <h3>Vaccine Management</h3>
+          <p>
+            View vaccine records, add new vaccines, update information
+            and manage your vaccine database.
+          </p>
+          <span className="details-button">View Details →</span>
+        </Link>
 
-    <span className="category">VACCINE DATABASE</span>
+        <Link
+          to="/admin/medicines"
+          className="vaccine-card admin-module-card"
+        >
+          <div className="vaccine-icon">💊</div>
+          <span className="category">MEDICINE DATABASE</span>
+          <h3>Medicine Management</h3>
+          <p>
+            View medicine records, add new medicines, update information
+            and manage your medicine database.
+          </p>
+          <span className="details-button">View Details →</span>
+        </Link>
 
-    <h3>Vaccine Management</h3>
+        <Link
+          to="/admin/diseases"
+          className="vaccine-card admin-module-card"
+        >
+          <div className="vaccine-icon">🦠</div>
+          <span className="category">DISEASE DATABASE</span>
+          <h3>Disease Management</h3>
+          <p>
+            View disease records, add disease information, manage
+            symptoms and specializations, and review medical references.
+          </p>
+          <span className="details-button">View Details →</span>
+        </Link>
 
-    <p>
-      View vaccine records, add new vaccines, update information
-      and manage your vaccine database.
-    </p>
+        <Link
+          to="/admin/doctors"
+          className="vaccine-card admin-module-card"
+        >
+          <div className="vaccine-icon">🩺</div>
+          <span className="category">DOCTOR DIRECTORY</span>
+          <h3>Doctor Management</h3>
+          <p>
+            Add and manage doctor profiles, professional qualifications,
+            medical specializations, disease associations and verification.
+          </p>
+          <span className="details-button">View Details →</span>
+        </Link>
 
-    <span className="details-button">
-      View Details →
-    </span>
-  </Link>
+        <Link
+          to="/admin/treatments"
+          className="vaccine-card admin-module-card"
+        >
+          <div className="vaccine-icon">🩺</div>
+          <span className="category">TREATMENT DATABASE</span>
+          <h3>Treatment Management</h3>
+          <p>
+            Add and manage disease treatments, link verified medicines,
+            review medical references and publish verified treatment information.
+          </p>
+          <span className="details-button">View Details →</span>
+        </Link>
 
-  <Link
-    to="/admin/medicines"
-    className="vaccine-card admin-module-card"
-  >
-    <div className="vaccine-icon">💊</div>
+        <Link
+          to="/admin/hospitals"
+          className="vaccine-card admin-module-card"
+        >
+          <div className="vaccine-icon">🏥</div>
+          <span className="category">HOSPITAL DIRECTORY</span>
+          <h3>Hospital Management</h3>
+          <p>
+            Add and import hospitals, manage branch locations,
+            specializations, associated doctors and verification.
+          </p>
+          <span className="details-button">View Details →</span>
+        </Link>
 
-    <span className="category">MEDICINE DATABASE</span>
-
-    <h3>Medicine Management</h3>
-
-    <p>
-      View medicine records, add new medicines, update information
-      and manage your medicine database.
-    </p>
-
-    <span className="details-button">
-      View Details →
-    </span>
-  </Link>
-
-</section>
+      </section>
 
     </main>
   );
@@ -323,70 +527,6 @@ function AdminDashboard() {
 // ==========================================
 
 function HomePage() {
-  const [vaccines, setVaccines] = useState([]);
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-
-    async function fetchVaccines() {
-      const { data, error } = await supabase
-        .from("vaccines")
-        .select("*")
-        .order("id", { ascending: true });
-
-      if (!active) return;
-
-      if (error) {
-        console.error("Error fetching vaccines:", error.message);
-        setError("Unable to load vaccines. Please try again later.");
-        setLoading(false);
-        return;
-      }
-
-      const formattedVaccines = (data || []).map((vaccine) => ({
-        ...(vaccine.details || {}),
-        id: vaccine.id,
-        name: vaccine.name,
-        fullName: vaccine.full_name,
-        category: vaccine.category,
-        purpose: vaccine.purpose,
-        age: vaccine.age,
-        icon: vaccine.icon,
-      }));
-
-      setVaccines(formattedVaccines);
-      setLoading(false);
-    }
-
-    fetchVaccines();
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const filteredVaccines = vaccines.filter((vaccine) => {
-    const searchText = search.toLowerCase().trim();
-
-    return [
-      vaccine.name,
-      vaccine.fullName,
-      vaccine.category,
-      vaccine.purpose,
-      vaccine.age,
-      ...(Array.isArray(vaccine.protection?.diseases)
-        ? vaccine.protection.diseases
-        : []),
-    ]
-      .filter(Boolean)
-      .some((item) =>
-        String(item).toLowerCase().includes(searchText)
-      );
-  });
-
   return (
     <main className="app home-page">
 
@@ -462,34 +602,15 @@ function HomePage() {
           <h2>What are you looking for?</h2>
 
           <p>
-            Explore vaccine and medicine information through
-            the available VaxCare directories.
+            Search verified vaccine and medicine information
+            available in the VaxCare directory.
           </p>
         </div>
 
-        <div className="home-search-box">
-          <span>⌕</span>
-
-          <input
-            type="text"
-            placeholder="Search vaccines, diseases or age groups..."
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            aria-label="Search vaccines"
-          />
-
-          {search && (
-            <button
-              type="button"
-              onClick={() => setSearch("")}
-            >
-              Clear
-            </button>
-          )}
-        </div>
+        <GlobalSearch variant="home" />
       </section>
 
-      {/* HEALTHCARE CATEGORIES */}
+      {/* HEALTHCARE SERVICES */}
 
       <section
         className="home-services-section"
@@ -512,6 +633,8 @@ function HomePage() {
 
         <div className="home-services-grid">
 
+          {/* VACCINES */}
+
           <Link
             to="/vaccines"
             className="home-service-card home-service-active"
@@ -525,10 +648,12 @@ function HomePage() {
               vaccination details.
             </p>
 
-            <span className="home-service-link">
+            <span className="home-service-button">
               Explore Vaccines →
             </span>
           </Link>
+
+          {/* MEDICINES */}
 
           <Link
             to="/medicines"
@@ -543,27 +668,57 @@ function HomePage() {
               uses and safety information.
             </p>
 
-            <span className="home-service-link">
+            <span className="home-service-button">
               Explore Medicines →
             </span>
           </Link>
 
-          <div className="home-service-card">
+          {/* DISEASES */}
+
+          <Link
+            to="/diseases"
+            className="home-service-card home-service-active"
+          >
             <div className="home-service-icon">🦠</div>
 
             <h3>Diseases</h3>
 
             <p>
-              Understand diseases, symptoms and evidence-based
-              treatment information.
+              Explore disease information, symptoms, causes,
+              prevention and related medical specialties.
             </p>
 
-            <span className="home-coming-soon">
-              Coming Soon
+            <span className="home-service-button">
+              Explore Diseases →
             </span>
-          </div>
+          </Link>
 
-          <div className="home-service-card">
+          {/* TREATMENTS */}
+
+          <Link
+            to="/treatments"
+            className="home-service-card home-service-active"
+          >
+            <div className="home-service-icon">💊</div>
+
+            <h3>Treatments</h3>
+
+            <p>
+              Explore verified treatment information and related
+              medicines for different health conditions.
+            </p>
+
+            <span className="home-service-button">
+              Explore Treatments →
+            </span>
+          </Link>
+
+          {/* DOCTORS */}
+
+          <Link
+            to="/doctors"
+            className="home-service-card home-service-active"
+          >
             <div className="home-service-icon">🩺</div>
 
             <h3>Doctors</h3>
@@ -572,122 +727,32 @@ function HomePage() {
               Discover doctors and healthcare specialists.
             </p>
 
-            <span className="home-coming-soon">
-              Coming Soon
+            <span className="home-service-button">
+              Explore Doctors →
             </span>
-          </div>
+          </Link>
 
-          <div className="home-service-card">
+          {/* HOSPITALS */}
+
+          <Link
+            to="/hospitals"
+            className="home-service-card home-service-active"
+          >
             <div className="home-service-icon">🏥</div>
 
             <h3>Hospitals</h3>
 
             <p>
-              Find hospitals and explore healthcare services.
+              Find hospitals, explore their branches,
+              facilities and associated doctors.
             </p>
 
-            <span className="home-coming-soon">
-              Coming Soon
+            <span className="home-service-button">
+              Explore Hospitals →
             </span>
-          </div>
-
-        </div>
-      </section>
-
-      {/* VACCINE DIRECTORY */}
-
-      <section
-        className="home-vaccine-section"
-        id="vaccines"
-      >
-        <div className="home-section-heading">
-          <div>
-            <span className="home-section-label">
-              AVAILABLE DIRECTORY
-            </span>
-
-            <h2>Explore Vaccines</h2>
-
-            <p>
-              Discover information about vaccines and the
-              diseases they help prevent.
-            </p>
-          </div>
-
-          <Link
-            to="/vaccines"
-            className="home-view-all"
-          >
-            View All Vaccines →
           </Link>
+
         </div>
-
-        {loading ? (
-          <p className="home-message">
-            Loading vaccines...
-          </p>
-        ) : error ? (
-          <p className="home-message home-error">
-            {error}
-          </p>
-        ) : (
-          <>
-            <p className="home-results-count">
-              {search
-                ? `${filteredVaccines.length} matching vaccines`
-                : `${vaccines.length} vaccines available`}
-            </p>
-
-            {filteredVaccines.length > 0 ? (
-              <div className="home-vaccine-grid">
-                {filteredVaccines.slice(0, 8).map((vaccine) => (
-                  <article
-                    className="home-vaccine-card"
-                    key={vaccine.id}
-                  >
-                    <div className="home-vaccine-icon">
-                      {vaccine.icon || "💉"}
-                    </div>
-
-                    <span className="home-vaccine-category">
-                      {vaccine.category}
-                    </span>
-
-                    <h3>{vaccine.name}</h3>
-
-                    <p>{vaccine.purpose}</p>
-
-                    <div className="home-vaccine-age">
-                      Age group: {vaccine.age || "Not specified"}
-                    </div>
-
-                    <Link
-                      to={`/vaccines/${vaccine.id}`}
-                      className="home-vaccine-link"
-                    >
-                      View Details →
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <p className="home-message">
-                No matching vaccines found. Try another search.
-              </p>
-            )}
-
-            {!search && vaccines.length > 8 && (
-              <div className="home-vaccine-more">
-                <Link
-                  to="/vaccines"
-                  className="home-primary-button"
-                >
-                  Discover All Vaccines →
-                </Link>
-              </div>
-            )}
-          </>
-        )}
       </section>
 
       {/* MEDICINE PROMOTION */}
@@ -781,7 +846,10 @@ function App() {
 
         <Route path="/vaccines" element={<Vaccines />} />
 
-        <Route path="/vaccines/:id" element={<VaccineDetails />} />
+        <Route
+          path="/vaccines/:id"
+          element={<VaccineDetails />}
+        />
 
         <Route path="/medicines" element={<Medicines />} />
 
@@ -790,16 +858,56 @@ function App() {
           element={<MedicineDetails />}
         />
 
+        <Route path="/diseases" element={<Diseases />} />
+
+        <Route
+          path="/diseases/:id"
+          element={<DiseaseDetails />}
+        />
+
+        {/* DOCTOR ROUTES */}
+
+        <Route
+          path="/doctors"
+          element={<Doctors />}
+        />
+
+        <Route
+          path="/doctors/:id"
+          element={<DoctorDetails />}
+        />
+
+        {/* TREATMENT ROUTES */}
+
+        <Route
+          path="/treatments"
+          element={<Treatments />}
+        />
+
+        <Route
+          path="/treatments/:id"
+          element={<TreatmentDetails />}
+        />
+
+        {/* HOSPITAL ROUTES */}
+
+        <Route
+          path="/hospitals"
+          element={<Hospitals />}
+        />
+
+        <Route
+          path="/hospitals/:slug"
+          element={<HospitalDetails />}
+        />
+
         <Route path="/about" element={<About />} />
 
         {/* AUTHENTICATION */}
 
         <Route path="/login" element={<Login />} />
-
         <Route path="/signup" element={<Signup />} />
-
         <Route path="/profile" element={<Profile />} />
-
         <Route path="/settings" element={<Settings />} />
 
         {/* ADMIN DASHBOARD */}
@@ -823,11 +931,30 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/vaccines/import"
           element={
             <AdminRoute>
               <AdminVaccineImport />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/vaccines/new"
+          element={
+            <AdminRoute>
+              <AdminVaccineEdit />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/vaccines/:id/edit"
+          element={
+            <AdminRoute>
+              <AdminVaccineEdit />
             </AdminRoute>
           }
         />
@@ -841,59 +968,211 @@ function App() {
           }
         />
 
+        {/* ADMIN MEDICINE MANAGEMENT */}
+
         <Route
-          path="/admin/vaccines/:id/edit"
+          path="/admin/medicines"
           element={
             <AdminRoute>
-              <AdminVaccineEdit />
+              <AdminMedicines />
             </AdminRoute>
           }
         />
-        {/* ADMIN MEDICINE MANAGEMENT */}
 
-<Route
-  path="/admin/medicines"
-  element={
-    <AdminRoute>
-      <AdminMedicines />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/admin/medicines/:id"
-  element={
-    <AdminRoute>
-      <AdminMedicineDetails />
-    </AdminRoute>
-  }
-/>
-<Route
-  path="/admin/medicines/new"
-  element={
-    <AdminRoute>
-      <AdminMedicineEdit />
-    </AdminRoute>
-  }
-/>
+        <Route
+          path="/admin/medicines/import"
+          element={
+            <AdminRoute>
+              <AdminMedicineImport />
+            </AdminRoute>
+          }
+        />
 
-<Route
-  path="/admin/medicines/:id/edit"
-  element={
-    <AdminRoute>
-      <AdminMedicineEdit />
-    </AdminRoute>
-  }
-/>
+        <Route
+          path="/admin/medicines/new"
+          element={
+            <AdminRoute>
+              <AdminMedicineEdit />
+            </AdminRoute>
+          }
+        />
 
-<Route
-  path="/admin/vaccines/new"
-  element={
-    <AdminRoute>
-      <AdminVaccineEdit />
-    </AdminRoute>
-  }
-/>
+        <Route
+          path="/admin/medicines/:id/edit"
+          element={
+            <AdminRoute>
+              <AdminMedicineEdit />
+            </AdminRoute>
+          }
+        />
 
+        <Route
+          path="/admin/medicines/:id"
+          element={
+            <AdminRoute>
+              <AdminMedicineDetails />
+            </AdminRoute>
+          }
+        />
+
+        {/* ADMIN DISEASE MANAGEMENT */}
+
+        <Route
+          path="/admin/diseases"
+          element={
+            <AdminRoute>
+              <AdminDiseases />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/diseases/import"
+          element={
+            <AdminRoute>
+              <AdminDiseaseImport />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/diseases/new"
+          element={
+            <AdminRoute>
+              <AdminDiseaseEdit />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/diseases/:id"
+          element={
+            <AdminRoute>
+              <AdminDiseaseDetails />
+            </AdminRoute>
+          }
+        />
+
+        {/* ADMIN DOCTOR MANAGEMENT */}
+
+        <Route
+          path="/admin/doctors"
+          element={
+            <AdminRoute>
+              <AdminDoctors />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/doctors/new"
+          element={
+            <AdminRoute>
+              <AdminDoctorEdit />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/doctors/import"
+          element={
+            <AdminRoute>
+              <AdminDoctorImport />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/doctors/:id"
+          element={
+            <AdminRoute>
+              <AdminDoctorDetails />
+            </AdminRoute>
+          }
+        />
+
+        {/* ADMIN TREATMENT MANAGEMENT */}
+
+        <Route
+          path="/admin/treatments"
+          element={
+            <AdminRoute>
+              <AdminTreatments />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/treatments/new"
+          element={
+            <AdminRoute>
+              <AdminAddTreatment />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/treatments/:id"
+          element={
+            <AdminRoute>
+              <AdminTreatmentDetails />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/treatments/import"
+          element={
+            <AdminRoute>
+              <AdminTreatmentImport />
+            </AdminRoute>
+          }
+        />
+
+        {/* ADMIN HOSPITAL MANAGEMENT */}
+
+        <Route
+          path="/admin/hospitals"
+          element={
+            <AdminRoute>
+              <AdminHospitals />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/hospitals/new"
+          element={
+            <AdminRoute>
+              <AdminHospitalEdit />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/hospitals/import"
+          element={
+            <AdminRoute>
+              <AdminHospitalImport />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/hospitals/:id"
+          element={
+            <AdminRoute>
+              <AdminHospitalDetails />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/vaccines/who-products"
+          element={
+            <AdminRoute>
+              <AdminWHOProducts />
+            </AdminRoute>
+          }
+        />
 
       </Route>
     </Routes>

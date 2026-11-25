@@ -1,0 +1,243 @@
+
+.admin-add-treatment-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+}
+
+.admin-add-treatment-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.admin-add-treatment-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 25px;
+  color: #147cc1;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.admin-add-treatment-header {
+  margin-bottom: 25px;
+}
+
+.admin-add-treatment-header span {
+  color: #1685c5;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.admin-add-treatment-header h1 {
+  margin: 10px 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.admin-add-treatment-header p {
+  color: #718096;
+  line-height: 1.6;
+}
+
+.admin-add-treatment-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 17px;
+  margin-bottom: 22px;
+  border: 1px solid #cfe3f6;
+  background: #edf7ff;
+  border-radius: 11px;
+  color: #17669b;
+}
+
+.admin-add-treatment-notice p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.admin-add-treatment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-add-treatment-section {
+  padding: 25px;
+  background: white;
+  border: 1px solid #e5ebf3;
+  border-radius: 13px;
+  box-shadow: 0 4px 16px rgba(23, 43, 77, 0.04);
+}
+
+.admin-add-treatment-section h2 {
+  margin: 0 0 22px;
+  font-size: 19px;
+  font-weight: 800;
+  color: #203b5d;
+}
+
+.admin-add-treatment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.admin-add-treatment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.admin-add-treatment-grid .admin-add-treatment-field {
+  margin-bottom: 0;
+}
+
+.admin-add-treatment-field.full {
+  grid-column: 1 / -1;
+}
+
+.admin-add-treatment-field label {
+  font-size: 13px;
+  font-weight: 750;
+  color: #344563;
+}
+
+.admin-add-treatment-field input,
+.admin-add-treatment-field select,
+.admin-add-treatment-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dce4ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #172b4d;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-add-treatment-field input:focus,
+.admin-add-treatment-field select:focus,
+.admin-add-treatment-field textarea:focus {
+  border-color: #1685c5;
+  box-shadow: 0 0 0 3px rgba(22, 133, 197, 0.1);
+}
+
+.admin-add-treatment-field textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.admin-add-treatment-field small {
+  color: #8492a6;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.admin-add-treatment-medicine-select {
+  min-height: 150px;
+}
+
+.admin-add-treatment-error,
+.admin-add-treatment-success {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border-radius: 9px;
+  font-size: 14px;
+}
+
+.admin-add-treatment-error {
+  color: #a52d2d;
+  background: #fff0f0;
+  border: 1px solid #f2caca;
+}
+
+.admin-add-treatment-success {
+  color: #137447;
+  background: #e9f8ef;
+  border: 1px solid #c8ead5;
+}
+
+.admin-add-treatment-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 13px;
+  padding: 20px 0;
+}
+
+.admin-add-treatment-cancel,
+.admin-add-treatment-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 45px;
+  padding: 12px 20px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.admin-add-treatment-cancel {
+  background: white;
+  color: #52647d;
+  border: 1px solid #dce4ef;
+}
+
+.admin-add-treatment-submit {
+  background: #147cc1;
+  color: white;
+  border: 1px solid #147cc1;
+}
+
+.admin-add-treatment-submit:hover {
+  background: #0c639f;
+}
+
+.admin-add-treatment-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-add-treatment-loading {
+  padding: 100px 20px;
+  text-align: center;
+  color: #718096;
+}
+
+@media (max-width: 650px) {
+  .admin-add-treatment-page {
+    padding: 25px 4%;
+  }
+
+  .admin-add-treatment-header h1 {
+    font-size: 26px;
+  }
+
+  .admin-add-treatment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-add-treatment-section {
+    padding: 19px;
+  }
+
+  .admin-add-treatment-footer {
+    flex-direction: column-reverse;
+  }
+
+  .admin-add-treatment-cancel,
+  .admin-add-treatment-submit {
+    width: 100%;
+  }
+}

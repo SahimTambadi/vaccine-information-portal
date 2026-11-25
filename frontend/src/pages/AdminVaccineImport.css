@@ -701,3 +701,90 @@
     font-size: 11px;
   }
 }
+
+
+/* ==========================================
+   WHO VACCINE PRODUCTS REVIEW ENTRY
+========================================== */
+
+.who-import-entry {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 30px 0;
+  padding: 25px 28px;
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #eff6ff, #ffffff);
+}
+
+.who-import-entry-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #dbeafe;
+  font-size: 29px;
+}
+
+.who-import-entry-content {
+  flex: 1;
+}
+
+.who-import-entry-label {
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.who-import-entry-content h2 {
+  margin: 6px 0;
+  color: #172554;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.who-import-entry-content p {
+  max-width: 650px;
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.who-import-entry-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 9px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.who-import-entry-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  .who-import-entry {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 21px;
+  }
+
+  .who-import-entry-button {
+    width: 100%;
+  }
+}

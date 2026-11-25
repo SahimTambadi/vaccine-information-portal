@@ -1,0 +1,644 @@
+
+/* =========================================
+   VAXCARE - ADMIN DOCTOR MANAGEMENT
+========================================= */
+
+.admin-doctors-page {
+  min-height: 100vh;
+  background: #f3f6fc;
+  color: #10254d;
+  font-family: "Inter", sans-serif;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.admin-doctors-hero {
+  min-height: 260px;
+  padding: 55px 8%;
+  background: linear-gradient(120deg, #102d59, #176b87);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  color: #ffffff;
+}
+
+.admin-doctors-eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #a9e5ee;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.admin-doctors-hero h1 {
+  margin: 0 0 14px;
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.admin-doctors-hero p {
+  max-width: 650px;
+  margin: 0;
+  color: #dce8f7;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.admin-doctors-hero-icon {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.13);
+  font-size: 55px;
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.admin-doctors-content {
+  width: 84%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 35px 0 55px;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.admin-doctors-heading-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.admin-doctor-add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #176b87;
+  color: #ffffff;
+  border: 1px solid #176b87;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.admin-doctor-add-button:hover {
+  background: #12566e;
+  border-color: #12566e;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.admin-doctors-refresh {
+  padding: 12px 19px;
+  border: 1px solid #d7e0ed;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #29496e;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-doctors-refresh:hover {
+  background: #edf4fb;
+}
+
+.admin-doctors-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+.admin-doctor-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.admin-doctor-stat {
+  padding: 23px;
+  background: #ffffff;
+  border: 1px solid #e5ebf4;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(23, 52, 91, 0.04);
+}
+
+.admin-doctor-stat span {
+  display: block;
+  margin-bottom: 12px;
+  color: #75859e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-doctor-stat strong {
+  display: block;
+  color: #12305c;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+/* =========================================
+   SEARCH AND FILTERS
+========================================= */
+
+.admin-doctor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.admin-doctor-search {
+  min-width: 280px;
+  max-width: 550px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid #dfe7f1;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.admin-doctor-search span {
+  color: #8493aa;
+  font-size: 24px;
+}
+
+.admin-doctor-search input {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #18365e;
+  font-size: 13px;
+}
+
+.admin-doctor-search input::placeholder {
+  color: #9aa8ba;
+}
+
+.admin-doctor-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-doctor-filter {
+  padding: 10px 15px;
+  border: 1px solid #dfe7f1;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #64758e;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-doctor-filter:hover {
+  border-color: #176b87;
+  color: #176b87;
+}
+
+.admin-doctor-filter.active {
+  border-color: #176b87;
+  background: #176b87;
+  color: #ffffff;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.admin-doctor-error {
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid #f2c5c5;
+  border-radius: 12px;
+  background: #fff3f3;
+  color: #9c3030;
+}
+
+.admin-doctor-error strong {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.admin-doctor-error p {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.admin-doctor-error button {
+  padding: 9px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #a83232;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.admin-doctor-state {
+  padding: 65px 20px;
+  text-align: center;
+  color: #7889a1;
+}
+
+.admin-doctor-loader {
+  width: 35px;
+  height: 35px;
+  margin: 0 auto 15px;
+  border: 4px solid #dce6f1;
+  border-top-color: #176b87;
+  border-radius: 50%;
+  animation: adminDoctorSpin 0.8s linear infinite;
+}
+
+@keyframes adminDoctorSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   TABLE SECTION
+========================================= */
+
+.admin-doctor-table-section {
+  overflow: hidden;
+  border: 1px solid #e4eaf2;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 5px 18px rgba(23, 52, 91, 0.04);
+}
+
+.admin-doctor-table-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.admin-doctor-table-heading h3 {
+  margin: 0;
+  color: #17345c;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.admin-doctor-table-heading span {
+  color: #8290a5;
+  font-size: 12px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.admin-doctor-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-doctor-table {
+  width: 100%;
+  min-width: 1050px;
+  border-collapse: collapse;
+}
+
+.admin-doctor-table th {
+  padding: 16px 19px;
+  background: #f7f9fc;
+  color: #74839a;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+
+.admin-doctor-table td {
+  padding: 18px 19px;
+  border-top: 1px solid #edf1f6;
+  color: #52647d;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.admin-doctor-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.admin-doctor-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.admin-doctor-table td strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #17345c;
+  font-size: 14px;
+}
+
+.admin-doctor-contact {
+  display: block;
+  max-width: 180px;
+  color: #8492a7;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.admin-doctor-registration {
+  color: #536d91;
+  font-size: 12px;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.admin-doctor-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.admin-doctor-status.pending {
+  background: #fff4dc;
+  color: #a56b08;
+}
+
+.admin-doctor-status.verified {
+  background: #e1f6e9;
+  color: #16834a;
+}
+
+.admin-doctor-status.rejected {
+  background: #fde8e8;
+  color: #b83b3b;
+}
+
+/* =========================================
+   VIEW DETAILS
+========================================= */
+
+.admin-doctor-view-link {
+  color: #176b87;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.admin-doctor-view-link:hover {
+  color: #104c64;
+  text-decoration: underline;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.admin-doctor-empty {
+  padding: 65px 20px;
+  text-align: center;
+}
+
+.admin-doctor-empty > div {
+  margin-bottom: 15px;
+  font-size: 45px;
+}
+
+.admin-doctor-empty h3 {
+  margin: 0 0 10px;
+  color: #1a365e;
+  font-size: 19px;
+}
+
+.admin-doctor-empty p {
+  max-width: 490px;
+  margin: 0 auto 22px;
+  color: #8290a5;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   ADMIN NOTE
+========================================= */
+
+.admin-doctor-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-top: 25px;
+  padding: 18px 20px;
+  border: 1px solid #dce9f3;
+  border-radius: 12px;
+  background: #edf6fb;
+  color: #42647e;
+}
+
+.admin-doctor-note > span {
+  font-size: 20px;
+}
+
+.admin-doctor-note p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   BACK TO DASHBOARD
+========================================= */
+
+.admin-doctors-back {
+  margin-top: 28px;
+}
+
+.admin-doctors-back a {
+  color: #176b87;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-doctors-back a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+  .admin-doctors-content {
+    width: 90%;
+  }
+
+  .admin-doctor-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-doctor-toolbar {
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-doctors-hero {
+    padding: 42px 6%;
+  }
+
+  .admin-doctors-hero h1 {
+    font-size: 29px;
+  }
+
+  .admin-doctors-hero p {
+    font-size: 13px;
+  }
+
+  .admin-doctors-hero-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    font-size: 35px;
+  }
+
+  .admin-doctors-content {
+    width: 92%;
+    padding-top: 25px;
+  }
+
+  .admin-doctors-heading-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-doctor-stats {
+    gap: 12px;
+  }
+
+  .admin-doctor-stat {
+    padding: 17px;
+  }
+
+  .admin-doctor-stat strong {
+    font-size: 25px;
+  }
+
+  .admin-doctor-search {
+    min-width: 100%;
+    max-width: none;
+  }
+
+  .admin-doctor-filters {
+    width: 100%;
+  }
+
+  .admin-doctor-filter {
+    flex: 1;
+  }
+
+  .admin-doctor-table-heading {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .admin-doctors-hero {
+    align-items: flex-start;
+  }
+
+  .admin-doctors-hero-icon {
+    display: none;
+  }
+
+  .admin-doctor-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================================
+   IMPORT DOCTORS BUTTON
+========================================= */
+
+.admin-doctor-import-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 11px 18px;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.admin-doctor-import-link:hover {
+  background: #edf4ff;
+  border-color: #17458f;
+  color: #17458f;
+  transform: translateY(-2px);
+}
+
+/* EMPTY STATE ACTIONS */
+
+.admin-doctors-empty-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}

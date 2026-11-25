@@ -1,8 +1,9 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import SourceReferences from "../components/SourceReferences";
+import "./VaccineAvailability.css";
 
 // Safely convert a value into an array.
 function asArray(value) {
@@ -17,6 +18,44 @@ function asArray(value) {
   return [];
 }
 
+function formatCurrency(value) {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 2,
+  }).format(Number(value));
+}
+
+function formatDistance(value) {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  return `${Number(value).toFixed(1)} km`;
+}
+
+function formatDate(value) {
+  if (!value) {
+    return null;
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 function VaccineDetails() {
   const { id } = useParams();
 
@@ -24,6 +63,12 @@ function VaccineDetails() {
   const [vaccine, setVaccine] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Nearby vaccine availability states.
+  const [availability, setAvailability] = useState([]);
+  const [availabilityLoading, setAvailabilityLoading] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState("");
+  const [availabilitySearched, setAvailabilitySearched] = useState(false);
 
   // Fetch vaccine information from Supabase.
   useEffect(() => {
@@ -33,6 +78,10 @@ function VaccineDetails() {
         setError("");
         setVaccine(null);
         setSelectedSection(null);
+
+        setAvailability([]);
+        setAvailabilityError("");
+        setAvailabilitySearched(false);
 
         const { data, error } = await supabase
           .from("vaccines")
@@ -66,6 +115,106 @@ function VaccineDetails() {
 
     fetchVaccine();
   }, [id]);
+
+  // Fetch nearby verified vaccine availability.
+  const searchAvailability = useCallback(
+    async ({ latitude, longitude }) => {
+      if (!vaccine?.id) {
+        return;
+      }
+
+      try {
+        setAvailabilityLoading(true);
+        setAvailabilityError("");
+        setAvailability([]);
+        setAvailabilitySearched(true);
+
+        const { data, error } = await supabase.rpc(
+          "get_nearby_vaccine_availability",
+          {
+            p_vaccine_id: Number(vaccine.id),
+            p_latitude: latitude,
+            p_longitude: longitude,
+            p_pincode: null,
+          }
+        );
+
+        if (error) {
+          throw error;
+        }
+
+        setAvailability(data || []);
+      } catch (err) {
+        console.error("Vaccine availability error:", err);
+
+        setAvailabilityError(
+          "Unable to retrieve nearby vaccination centres. Please try again later."
+        );
+      } finally {
+        setAvailabilityLoading(false);
+      }
+    },
+    [vaccine?.id]
+  );
+
+  // Automatically detect visitor location and load nearby centres.
+  useEffect(() => {
+    if (!vaccine?.id) {
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      setAvailabilityError(
+        "Location services are not supported by this browser."
+      );
+      return;
+    }
+
+    let cancelled = false;
+
+    setAvailabilityLoading(true);
+    setAvailabilityError("");
+    setAvailabilitySearched(false);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        if (cancelled) return;
+
+        searchAvailability({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      (geoError) => {
+        if (cancelled) return;
+
+        setAvailabilityLoading(false);
+
+        if (geoError.code === 1) {
+          setAvailabilityError(
+            "Allow location access in your browser to see vaccination centres near you."
+          );
+        } else if (geoError.code === 2) {
+          setAvailabilityError(
+            "Your current location could not be detected. Please check your device location settings."
+          );
+        } else {
+          setAvailabilityError(
+            "Location detection timed out. Please refresh the page and try again."
+          );
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 60000,
+      }
+    );
+
+    return () => {
+      cancelled = true;
+    };
+  }, [vaccine?.id, searchAvailability]);
 
   if (loading) {
     return (
@@ -172,23 +321,23 @@ function VaccineDetails() {
               <h3>Administration</h3>
 
               {typeof vaccine.indiaGuidance.administration === "object" &&
-                !Array.isArray(vaccine.indiaGuidance.administration) ? (
-                  Object.entries(vaccine.indiaGuidance.administration).map(
-                    ([key, value]) => (
-                      <p key={key}>
-                        <strong>
-                          {key.replace(/([A-Z])/g, " $1")}:
-                        </strong>{" "}
-                        {typeof value === "string" ||
-                        typeof value === "number"
-                          ? value
-                          : JSON.stringify(value)}
-                      </p>
-                    )
+              !Array.isArray(vaccine.indiaGuidance.administration) ? (
+                Object.entries(vaccine.indiaGuidance.administration).map(
+                  ([key, value]) => (
+                    <p key={key}>
+                      <strong>
+                        {key.replace(/([A-Z])/g, " $1")}:
+                      </strong>{" "}
+                      {typeof value === "string" ||
+                      typeof value === "number"
+                        ? value
+                        : JSON.stringify(value)}
+                    </p>
                   )
-                ) : (
-                  <p>{String(vaccine.indiaGuidance.administration)}</p>
-                )}
+                )
+              ) : (
+                <p>{String(vaccine.indiaGuidance.administration)}</p>
+              )}
             </>
           )}
         </>
@@ -373,13 +522,187 @@ function VaccineDetails() {
         </p>
       </section>
 
+      {/* Automatically Loaded Nearby Vaccine Availability */}
+      <section className="vaccine-availability-section">
+
+        <div className="vaccine-availability-heading">
+          <span className="availability-eyebrow">
+            LOCATION-BASED VACCINATION SERVICES
+          </span>
+
+          <h2>Vaccination Centres Near You</h2>
+
+          <p>
+            Looking for <strong>{vaccine.name}</strong>?
+            Discover verified hospitals and vaccination centres
+            near your current location, with reported prices
+            and availability.
+          </p>
+        </div>
+
+        {availabilityLoading && (
+          <div className="availability-loading">
+            <p>
+              📍 Finding vaccination centres near your location...
+            </p>
+          </div>
+        )}
+
+        {availabilityError && (
+          <div className="availability-error" role="alert">
+            <span>📍</span>
+            <p>{availabilityError}</p>
+          </div>
+        )}
+
+        {!availabilityLoading &&
+          !availabilityError &&
+          availabilitySearched &&
+          availability.length > 0 && (
+            <div className="availability-results">
+
+              <div className="availability-results-heading">
+                <h3>Available Centres Near You</h3>
+
+                <span>
+                  {availability.length}{" "}
+                  {availability.length === 1 ? "centre" : "centres"} found
+                </span>
+              </div>
+
+              <div className="availability-card-grid">
+                {availability.map((centre) => (
+                  <article
+                    className="availability-centre-card"
+                    key={centre.availability_id}
+                  >
+                    <div className="availability-card-top">
+                      <div>
+                        <span className="availability-centre-label">
+                          VERIFIED CENTRE
+                        </span>
+
+                        <h3>
+                          {centre.centre_name || centre.hospital_name}
+                        </h3>
+
+                        {centre.centre_name && (
+                          <p className="availability-hospital-name">
+                            {centre.hospital_name}
+                          </p>
+                        )}
+                      </div>
+
+                      <span
+                        className={`availability-status ${centre.availability_status}`}
+                      >
+                        {centre.availability_status === "available"
+                          ? "Available"
+                          : "Limited Stock"}
+                      </span>
+                    </div>
+
+                    <div className="availability-address">
+                      <span>📍</span>
+
+                      <p>
+                        {[
+                          centre.address,
+                          centre.locality,
+                          centre.city,
+                          centre.state,
+                          centre.pincode,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </p>
+                    </div>
+
+                    {centre.distance_km != null && (
+                      <p className="availability-distance">
+                        ↗ {formatDistance(centre.distance_km)} away
+                      </p>
+                    )}
+
+                    <div className="availability-price-area">
+                      <div>
+                        <span>Vaccine price per dose</span>
+
+                        <strong>
+                          {formatCurrency(centre.price_per_dose) ||
+                            "Price not provided"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Administration fee</span>
+
+                        <strong>
+                          {formatCurrency(centre.administration_fee)}
+                        </strong>
+                      </div>
+
+                      <div className="availability-total-price">
+                        <span>Total per dose (reported)</span>
+
+                        <strong>
+                          {formatCurrency(centre.total_price) ||
+                            "Total price unavailable"}
+                        </strong>
+                      </div>
+                    </div>
+
+                    {centre.stock_quantity != null && (
+                      <p className="availability-stock">
+                        Reported stock: {centre.stock_quantity} doses
+                      </p>
+                    )}
+
+                    <div className="availability-updated">
+                      Last stock update:{" "}
+                      {formatDate(centre.last_stock_updated_at) ||
+                        "Date not provided"}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+
+        {!availabilityLoading &&
+          !availabilityError &&
+          availabilitySearched &&
+          availability.length === 0 && (
+            <div className="availability-empty">
+              <span>🏥</span>
+
+              <h3>No verified centres found nearby</h3>
+
+              <p>
+                There are currently no published availability
+                records for {vaccine.name} near your location.
+                Please check again later.
+              </p>
+            </div>
+          )}
+
+        <p className="availability-disclaimer">
+          Prices and availability are based on verified centre
+          records. Please contact the centre to reconfirm stock
+          and final charges before visiting.
+        </p>
+
+      </section>
+
       {/* Information Cards */}
       {!activeSection && (
         <>
           <section className="details-sections">
             <div className="details-heading">
               <p className="eyebrow">EXPLORE INFORMATION</p>
+
               <h2>Explore {vaccine.name}</h2>
+
               <p>
                 Select a section below to learn more about this vaccine.
               </p>
@@ -409,7 +732,6 @@ function VaccineDetails() {
             </div>
           </section>
 
-          {/* Back to Vaccine Directory */}
           <div className="back-navigation">
             <Link to="/vaccines">← Back to Vaccines</Link>
           </div>

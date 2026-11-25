@@ -2902,13 +2902,93 @@ footer a:hover {
   line-height: 1.9;
 }
 
+
+/* HERO ACTIONS */
+
 .home-hero-actions {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 15px;
-  margin-top: 30px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  margin-top: 28px;
 }
+
+.home-hero-primary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.home-hero-extra-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 850px;
+}
+
+.home-hero-extra-actions .home-hero-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  min-height: 43px;
+  border: 1px solid #dce8f2;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #173b5b;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.home-hero-extra-actions .home-hero-link:hover {
+  background: #eaf5fc;
+  border-color: #42a5d8;
+  color: #1769aa;
+  transform: translateY(-2px);
+}
+
+.home-hero-extra-actions .coming-soon-button {
+  color: #778797;
+  background: #f3f6f9;
+  border-style: dashed;
+  cursor: not-allowed;
+  flex-wrap: wrap;
+}
+
+.home-hero-extra-actions .coming-soon-button:hover {
+  transform: none;
+  background: #f3f6f9;
+  color: #778797;
+}
+
+.coming-soon-button small {
+  font-size: 10px;
+  font-weight: 700;
+  color: #b07832;
+  background: #fff2db;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+  .home-hero-primary-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .home-hero-primary-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .home-hero-extra-actions {
+    width: 100%;
+  }
+}
+
 
 .home-primary-button,
 .home-secondary-button {
@@ -6564,3 +6644,4 @@ footer a:hover {
   font-weight: 700;
   text-decoration: none;
 }
+

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
+import "./Profile.css";
 
 function Profile() {
   const [user, setUser] = useState(null);

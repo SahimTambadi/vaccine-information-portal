@@ -1,0 +1,440 @@
+
+.admin-hospital-import-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+}
+
+.admin-hospital-import-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hospital-import-back {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hospital-import-back:hover {
+  text-decoration: underline;
+}
+
+/* HEADER */
+
+.hospital-import-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 28px;
+}
+
+.hospital-import-eyebrow {
+  margin-bottom: 8px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.hospital-import-header h1 {
+  margin: 0 0 10px;
+  color: #172b4d;
+  font-size: 30px;
+}
+
+.hospital-import-header > div:first-child > p:last-child {
+  max-width: 720px;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.hospital-import-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* INFORMATION */
+
+.hospital-import-info {
+  margin-bottom: 22px;
+  padding: 17px 19px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background: #eff6ff;
+}
+
+.hospital-import-info strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #1d4ed8;
+  font-size: 13px;
+}
+
+.hospital-import-info p {
+  margin: 0;
+  color: #475569;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* MESSAGES */
+
+.hospital-import-error,
+.hospital-import-success {
+  margin-bottom: 20px;
+  padding: 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hospital-import-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.hospital-import-success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+/* TOOLBAR */
+
+.hospital-import-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 18px;
+}
+
+.hospital-import-search {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex: 1;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid #dce5f2;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #94a3b8;
+}
+
+.hospital-import-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #172b4d;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.hospital-import-search input::placeholder {
+  color: #94a3b8;
+}
+
+.hospital-import-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 1px solid #dce5f2;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hospital-import-refresh:hover {
+  background: #f8fafc;
+}
+
+/* SUMMARY */
+
+.hospital-import-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-bottom: 22px;
+  color: #718096;
+  font-size: 12px;
+}
+
+.hospital-import-summary span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hospital-import-summary strong {
+  color: #172b4d;
+  font-size: 15px;
+}
+
+/* HOSPITAL GRID */
+
+.hospital-import-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.hospital-import-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid #e5ebf4;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(30, 55, 90, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hospital-import-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 22px rgba(30, 55, 90, 0.08);
+}
+
+.hospital-import-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.hospital-import-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 11px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.hospital-import-type {
+  padding: 7px 10px;
+  border-radius: 30px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.hospital-import-card h2 {
+  min-height: 52px;
+  margin: 0 0 14px;
+  color: #172b4d;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.hospital-import-location {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.hospital-import-location svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #2563eb;
+}
+
+.hospital-import-phone {
+  margin: 0 0 13px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* SOURCE */
+
+.hospital-import-source {
+  margin-top: auto;
+  padding: 13px 0;
+  border-top: 1px solid #edf1f7;
+}
+
+.hospital-import-source > span {
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.hospital-import-source p {
+  margin: 7px 0;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hospital-import-source a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hospital-import-source a:hover {
+  text-decoration: underline;
+}
+
+/* FOOTER */
+
+.hospital-import-card-footer {
+  padding-top: 12px;
+  border-top: 1px solid #edf1f7;
+}
+
+.hospital-import-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.hospital-import-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.hospital-import-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.hospital-import-imported {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 9px;
+  border-radius: 8px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* EMPTY STATE */
+
+.hospital-import-empty {
+  padding: 55px 20px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.hospital-import-empty svg {
+  margin-bottom: 12px;
+}
+
+.hospital-import-empty h3 {
+  margin: 0 0 8px;
+  color: #334155;
+  font-size: 17px;
+}
+
+.hospital-import-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.hospital-import-footer {
+  padding: 28px 0 35px;
+}
+
+.hospital-import-footer a {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+  .hospital-import-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-hospital-import-page {
+    padding: 25px 4%;
+  }
+
+  .hospital-import-header h1 {
+    font-size: 25px;
+  }
+
+  .hospital-import-header-icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .hospital-import-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hospital-import-refresh {
+    width: 100%;
+  }
+
+  .hospital-import-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hospital-import-card h2 {
+    min-height: auto;
+  }
+}

@@ -312,6 +312,14 @@ function AdminVaccines() {
             Import Vaccines
           </Link>
 
+          <Link
+            to="/admin/vaccines/who-products"
+            className="vax-outline-button"
+          >
+            <span aria-hidden="true">🌍</span>
+            WHO Products Review
+          </Link>
+
           <button
             type="button"
             className="vax-outline-button"

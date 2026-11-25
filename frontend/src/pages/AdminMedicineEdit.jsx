@@ -20,7 +20,6 @@ const initialForm = {
   source_name: "",
   source_url: "",
   last_reviewed_at: "",
-  is_published: false,
 };
 
 function splitList(value) {
@@ -33,10 +32,19 @@ function splitList(value) {
 function validateSourceUrl(value) {
   try {
     const url = new URL(value.trim());
-    return ["http:", "https:"].includes(url.protocol);
+    return url.protocol === "https:";
   } catch {
     return false;
   }
+}
+
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
 
 function AdminMedicineEdit() {
@@ -49,7 +57,6 @@ function AdminMedicineEdit() {
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const fetchMedicine = useCallback(async () => {
     if (!isEditing) {
@@ -102,7 +109,6 @@ function AdminMedicineEdit() {
       source_name: data.source_name || "",
       source_url: data.source_url || "",
       last_reviewed_at: data.last_reviewed_at || "",
-      is_published: data.is_published || false,
     });
 
     setLoading(false);
@@ -121,7 +127,6 @@ function AdminMedicineEdit() {
     }));
 
     setError("");
-    setSuccess("");
   }
 
   function validateForm() {
@@ -129,38 +134,24 @@ function AdminMedicineEdit() {
       return "Medicine name is required.";
     }
 
-    if (formData.is_published) {
-      if (!formData.source_name.trim()) {
-        return "A source name is required before publishing.";
-      }
-
-      if (!formData.source_url.trim()) {
-        return "A source URL is required before publishing.";
-      }
-
-      if (!validateSourceUrl(formData.source_url)) {
-        return "Enter a valid HTTP or HTTPS source URL.";
-      }
-
-      if (!formData.last_reviewed_at) {
-        return "A last-reviewed date is required before publishing.";
-      }
-
-      const reviewDate = new Date(`${formData.last_reviewed_at}T00:00:00`);
-
-      if (
-        Number.isNaN(reviewDate.getTime()) ||
-        reviewDate > new Date()
-      ) {
-        return "The last-reviewed date cannot be in the future.";
-      }
-    }
-
     if (
       formData.source_url.trim() &&
       !validateSourceUrl(formData.source_url)
     ) {
-      return "Enter a valid HTTP or HTTPS source URL.";
+      return "Enter a valid HTTPS medical source URL.";
+    }
+
+    if (formData.last_reviewed_at) {
+      const reviewDate = new Date(
+        `${formData.last_reviewed_at}T00:00:00`
+      );
+
+      if (
+        Number.isNaN(reviewDate.getTime()) ||
+        formData.last_reviewed_at > getTodayDate()
+      ) {
+        return "The last-reviewed date cannot be in the future.";
+      }
     }
 
     return "";
@@ -172,7 +163,6 @@ function AdminMedicineEdit() {
     if (saving) return;
 
     setError("");
-    setSuccess("");
 
     const validationError = validateForm();
 
@@ -187,10 +177,12 @@ function AdminMedicineEdit() {
       generic_name: formData.generic_name.trim() || null,
       brand_names: splitList(formData.brand_names),
       category: formData.category.trim() || null,
+
       active_ingredients: formData.active_ingredients
         .split("\n")
         .map((item) => item.trim())
         .filter(Boolean),
+
       uses: formData.uses.trim() || null,
       available_forms: splitList(formData.available_forms),
       prescription_required: formData.prescription_required,
@@ -203,7 +195,10 @@ function AdminMedicineEdit() {
       source_name: formData.source_name.trim() || null,
       source_url: formData.source_url.trim() || null,
       last_reviewed_at: formData.last_reviewed_at || null,
-      is_published: formData.is_published,
+
+      // Every saved edit must go through review again.
+      review_status: "pending",
+
       updated_at: new Date().toISOString(),
     };
 
@@ -212,6 +207,7 @@ function AdminMedicineEdit() {
     let result;
 
     if (isEditing) {
+      // Existing provenance fields are deliberately not overwritten.
       result = await supabase
         .from("medicines")
         .update(payload)
@@ -221,17 +217,24 @@ function AdminMedicineEdit() {
     } else {
       result = await supabase
         .from("medicines")
-        .insert([payload])
+        .insert([
+          {
+            ...payload,
+            data_origin: "manual",
+          },
+        ])
         .select("id")
         .single();
     }
 
     if (result.error) {
       console.error("Medicine save error:", result.error);
+
       setError(
         result.error.message ||
           "Unable to save medicine. Check your administrator permissions."
       );
+
       setSaving(false);
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -245,8 +248,8 @@ function AdminMedicineEdit() {
       replace: true,
       state: {
         message: isEditing
-          ? "Medicine updated successfully."
-          : "Medicine created successfully.",
+          ? "Medicine updated and sent for review."
+          : "Medicine created and added to pending review.",
       },
     });
   }
@@ -267,10 +270,14 @@ function AdminMedicineEdit() {
         <div className="admin-medicine-edit-state">
           <h2>Unable to load medicine</h2>
           <p>{error}</p>
+
           <button type="button" onClick={fetchMedicine}>
             Try Again
           </button>
-          <Link to="/admin/medicines">Back to Medicines</Link>
+
+          <Link to="/admin/medicines">
+            Back to Medicines
+          </Link>
         </div>
       </main>
     );
@@ -292,9 +299,9 @@ function AdminMedicineEdit() {
           <h1>{isEditing ? "Edit Medicine" : "Add New Medicine"}</h1>
 
           <p>
-            Enter accurate medicine information and its supporting medical
-            reference. New records remain unpublished unless you explicitly
-            select publication.
+            Enter accurate medicine information and its supporting
+            medical reference. Saved records are sent for administrator
+            review before appearing publicly.
           </p>
         </header>
 
@@ -302,12 +309,6 @@ function AdminMedicineEdit() {
           <div className="admin-medicine-edit-alert error" role="alert">
             <strong>Unable to save</strong>
             <p>{error}</p>
-          </div>
-        )}
-
-        {success && (
-          <div className="admin-medicine-edit-alert success">
-            {success}
           </div>
         )}
 
@@ -394,7 +395,7 @@ function AdminMedicineEdit() {
                   value={formData.active_ingredients}
                   onChange={handleChange}
                   rows={4}
-                  placeholder={"Enter one ingredient per line"}
+                  placeholder="Enter one ingredient per line"
                 />
                 <small>
                   Each line is stored as a separate ingredient entry.
@@ -526,8 +527,8 @@ function AdminMedicineEdit() {
             </div>
 
             <p className="admin-medicine-form-hint">
-              Leave this checked unless the prescription classification has
-              been verified for the relevant medicine and formulation.
+              Leave this checked unless the prescription classification
+              has been verified for the relevant medicine and formulation.
             </p>
           </section>
 
@@ -557,12 +558,14 @@ function AdminMedicineEdit() {
               </div>
 
               <div className="admin-medicine-form-group">
-                <label htmlFor="last_reviewed_at">Last Reviewed Date</label>
+                <label htmlFor="last_reviewed_at">
+                  Last Reviewed Date
+                </label>
                 <input
                   id="last_reviewed_at"
                   name="last_reviewed_at"
                   type="date"
-                  max={new Date().toISOString().slice(0, 10)}
+                  max={getTodayDate()}
                   value={formData.last_reviewed_at}
                   onChange={handleChange}
                 />
@@ -581,43 +584,27 @@ function AdminMedicineEdit() {
                 <small>
                   Use a genuine, accessible medical reference. A URL alone
                   does not establish that the information is accurate.
+                  HTTPS is required.
                 </small>
               </div>
             </div>
           </section>
 
-          {/* PUBLICATION */}
+          {/* REVIEW WORKFLOW */}
 
           <section className="admin-medicine-form-card">
             <div className="admin-medicine-form-heading">
               <span>05</span>
               <div>
-                <h2>Publication Settings</h2>
-                <p>Choose whether this record should appear publicly.</p>
+                <h2>Review Workflow</h2>
+                <p>All saved records go through administrator review.</p>
               </div>
             </div>
 
-            <label className="admin-medicine-publish-toggle">
-              <input
-                type="checkbox"
-                name="is_published"
-                checked={formData.is_published}
-                onChange={handleChange}
-              />
-
-              <span>
-                <strong>Publish this medicine</strong>
-                <small>
-                  Published records become visible in the public Medicines
-                  directory.
-                </small>
-              </span>
-            </label>
-
             <p className="admin-medicine-form-hint">
-              Publishing requires a source name, valid HTTP/HTTPS source URL
-              and a last-reviewed date. Verify the medical content before
-              making it public.
+              {isEditing
+                ? "Saving changes will return this medicine to Pending review. An administrator must review the updated information before it can appear in the public directory."
+                : "This new medicine will be created with Pending review status. An administrator must verify its information and sources before it can appear in the public directory."}
             </p>
           </section>
 

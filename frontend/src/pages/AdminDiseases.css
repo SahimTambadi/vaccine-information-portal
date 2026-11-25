@@ -1,0 +1,643 @@
+
+/* =========================================
+   VAXCARE - ADMIN DISEASE MANAGEMENT
+========================================= */
+
+.admin-diseases-page {
+  min-height: 100vh;
+  padding: 35px 0 60px;
+  background: #f1f5fc;
+  color: #10254d;
+  font-family: "Inter", sans-serif;
+}
+
+.admin-diseases-content,
+.admin-diseases-hero {
+  width: 88%;
+  max-width: 1450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.admin-diseases-hero {
+  min-height: 220px;
+  padding: 38px 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  color: #ffffff;
+  background: linear-gradient(120deg, #082c59, #105b83);
+  border-radius: 17px;
+}
+
+.admin-diseases-eyebrow {
+  color: #78ded4;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.admin-diseases-hero h1 {
+  margin: 13px 0 10px;
+  color: #ffffff;
+  font-size: clamp(28px, 3.5vw, 38px);
+  font-weight: 800;
+}
+
+.admin-diseases-hero p {
+  max-width: 650px;
+  margin: 0;
+  color: #d9e8f5;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.admin-diseases-hero-icon {
+  width: 115px;
+  height: 115px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  font-size: 55px;
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.admin-diseases-content {
+  margin-top: 28px;
+}
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.admin-diseases-heading-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.admin-disease-add-button,
+.admin-diseases-refresh {
+  min-height: 42px;
+  padding: 11px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #087f83;
+  border-radius: 8px;
+  background: #087f83;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.admin-disease-add-button:hover,
+.admin-diseases-refresh:hover:not(:disabled) {
+  background: #066c70;
+  transform: translateY(-1px);
+}
+
+.admin-diseases-refresh {
+  background: #ffffff;
+  color: #087f83;
+}
+
+.admin-diseases-refresh:hover:not(:disabled) {
+  color: #ffffff;
+}
+
+.admin-diseases-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+.admin-disease-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.admin-disease-stat {
+  min-height: 105px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e3eaf3;
+  border-radius: 12px;
+  box-shadow: 0 5px 16px rgba(24, 50, 85, 0.035);
+}
+
+.admin-disease-stat span {
+  color: #718198;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-disease-stat strong {
+  color: #102c52;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* =========================================
+   SEARCH AND FILTER
+========================================= */
+
+.admin-disease-toolbar {
+  margin-bottom: 22px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e3eaf3;
+  border-radius: 12px;
+}
+
+.admin-disease-search {
+  min-height: 45px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid #dce5ef;
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.admin-disease-search span {
+  color: #718198;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.admin-disease-search input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #17395f;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.admin-disease-search input::placeholder {
+  color: #9aa8b9;
+}
+
+.admin-disease-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 17px;
+}
+
+.admin-disease-filter {
+  padding: 9px 15px;
+  border: 1px solid #dce5ef;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #63758d;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-disease-filter:hover {
+  border-color: #087f83;
+  color: #087f83;
+}
+
+.admin-disease-filter.active {
+  border-color: #087f83;
+  background: #087f83;
+  color: #ffffff;
+}
+
+/* =========================================
+   TABLE SECTION
+========================================= */
+
+.admin-disease-table-section {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e3eaf3;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(24, 50, 85, 0.035);
+}
+
+.admin-disease-table-heading {
+  min-height: 65px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.admin-disease-table-heading h3 {
+  margin: 0;
+  color: #102c52;
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.admin-disease-table-heading span {
+  color: #718198;
+  font-size: 12px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.admin-disease-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-disease-table {
+  width: 100%;
+  min-width: 950px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-disease-table th {
+  padding: 15px 17px;
+  background: #f7f9fc;
+  color: #65768c;
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.admin-disease-table td {
+  padding: 17px;
+  border-top: 1px solid #edf1f6;
+  color: #566b84;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.admin-disease-table tbody tr:hover {
+  background: #fbfdff;
+}
+
+.admin-disease-table td strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #17395f;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.admin-disease-description {
+  display: block;
+  max-width: 240px;
+  overflow: hidden;
+  color: #8190a4;
+  font-size: 11px;
+  line-height: 1.6;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-disease-slug {
+  color: #63758d;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   REVIEW STATUS
+========================================= */
+
+.admin-disease-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.admin-disease-status.pending {
+  background: #fff5df;
+  color: #9a6700;
+}
+
+.admin-disease-status.verified {
+  background: #e4f7ec;
+  color: #187744;
+}
+
+.admin-disease-status.rejected {
+  background: #fdeaea;
+  color: #b42318;
+}
+
+/* =========================================
+   VIEW DETAILS
+========================================= */
+
+.admin-disease-view-link {
+  color: #087f83;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.admin-disease-view-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.admin-disease-empty {
+  min-height: 290px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.admin-disease-empty > div {
+  margin-bottom: 12px;
+  font-size: 40px;
+}
+
+.admin-disease-empty h3 {
+  margin: 0 0 9px;
+  color: #17395f;
+  font-size: 18px;
+}
+
+.admin-disease-empty p {
+  max-width: 430px;
+  margin: 0 0 20px;
+  color: #8190a4;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   LOADING STATE
+========================================= */
+
+.admin-disease-state {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: #718198;
+  font-size: 13px;
+}
+
+.admin-disease-loader {
+  width: 38px;
+  height: 38px;
+  border: 4px solid #dcebe9;
+  border-top-color: #087f83;
+  border-radius: 50%;
+  animation: admin-disease-spin 0.8s linear infinite;
+}
+
+@keyframes admin-disease-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   ERROR STATE
+========================================= */
+
+.admin-disease-error {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #fff1f0;
+  border: 1px solid #f3c7c4;
+  border-radius: 10px;
+  color: #a12820;
+}
+
+.admin-disease-error strong {
+  font-size: 14px;
+}
+
+.admin-disease-error p {
+  margin: 8px 0 13px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admin-disease-error button {
+  padding: 8px 13px;
+  border: 1px solid #b42318;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #b42318;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================
+   ADMIN NOTE
+========================================= */
+
+.admin-disease-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 18px;
+  background: #edf7fb;
+  border: 1px solid #d6eaf2;
+  border-radius: 10px;
+}
+
+.admin-disease-note > span {
+  color: #087f83;
+  font-size: 19px;
+}
+
+.admin-disease-note p {
+  margin: 0;
+  color: #536e85;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.admin-disease-note strong {
+  color: #17395f;
+}
+
+/* =========================================
+   BACK TO DASHBOARD
+========================================= */
+
+.admin-diseases-back {
+  margin-top: 25px;
+}
+
+.admin-diseases-back a {
+  color: #087f83;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-diseases-back a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 900px) {
+  .admin-disease-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-diseases-content,
+  .admin-diseases-hero {
+    width: 92%;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-diseases-page {
+    padding-top: 22px;
+  }
+
+  .admin-diseases-hero {
+    min-height: auto;
+    padding: 28px 23px;
+  }
+
+  .admin-diseases-hero-icon {
+    width: 75px;
+    height: 75px;
+    font-size: 36px;
+  }
+
+  .admin-diseases-hero h1 {
+    font-size: 27px;
+  }
+
+  .admin-diseases-hero p {
+    font-size: 12px;
+  }
+
+  .admin-disease-stats {
+    gap: 10px;
+  }
+
+  .admin-disease-stat {
+    min-height: 90px;
+    padding: 15px;
+  }
+
+  .admin-disease-stat strong {
+    font-size: 24px;
+  }
+
+  .admin-disease-toolbar {
+    padding: 15px;
+  }
+
+  .admin-disease-filters {
+    gap: 7px;
+  }
+
+  .admin-disease-filter {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .admin-disease-table-heading {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-diseases-page *,
+  .admin-diseases-page *::before,
+  .admin-diseases-page *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.admin-disease-import-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #198754;
+  color: #ffffff;
+  border: 1px solid #198754;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.admin-disease-import-button:hover {
+  background: #146c43;
+  border-color: #146c43;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.admin-disease-empty-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}

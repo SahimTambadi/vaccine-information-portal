@@ -1,0 +1,476 @@
+
+.admin-doctor-details-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+}
+
+.doctor-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #2455a4;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.doctor-back-link:hover {
+  color: #123b80;
+}
+
+.admin-doctor-details-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.admin-doctor-details-eyebrow {
+  color: #3973c8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.admin-doctor-details-heading h1 {
+  margin: 9px 0;
+  font-size: 32px;
+  color: #142d52;
+}
+
+.admin-doctor-details-heading p {
+  color: #718096;
+  line-height: 1.7;
+}
+
+.doctor-review-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff4d6;
+  color: #996400;
+}
+
+.status-verified {
+  background: #dcfce7;
+  color: #16743c;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #b42318;
+}
+
+.doctor-details-card {
+  background: #ffffff;
+  border: 1px solid #e4eaf3;
+  border-radius: 15px;
+  padding: 26px;
+  margin-bottom: 22px;
+  box-shadow: 0 5px 20px rgba(25, 50, 85, 0.04);
+}
+
+.doctor-profile-top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9eef5;
+  margin-bottom: 24px;
+}
+
+.doctor-profile-avatar {
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #eaf2ff;
+  color: #2863b6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.doctor-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doctor-profile-heading h2 {
+  margin: 0 0 8px;
+  color: #17345e;
+  font-size: 23px;
+}
+
+.doctor-profile-heading p {
+  margin: 0 0 10px;
+  color: #687991;
+}
+
+.doctor-profile-heading span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #3973b9;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.doctor-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.doctor-details-grid label,
+.doctor-details-description label {
+  display: block;
+  margin-bottom: 7px;
+  color: #8190a5;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.doctor-details-grid p,
+.doctor-details-description p {
+  margin: 0;
+  color: #243d61;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.doctor-details-grid p a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2863b6;
+  text-decoration: none;
+}
+
+.doctor-details-description {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #edf1f6;
+}
+
+.doctor-details-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: #2863b6;
+}
+
+.doctor-details-section-heading h2 {
+  margin: 0;
+  color: #18365f;
+  font-size: 19px;
+}
+
+.doctor-details-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.doctor-details-tag {
+  min-width: 180px;
+  padding: 13px 16px;
+  border: 1px solid #dce7f6;
+  border-radius: 10px;
+  background: #f7faff;
+}
+
+.doctor-details-tag strong {
+  color: #28558e;
+  font-size: 14px;
+}
+
+.doctor-details-tag p,
+.doctor-details-tag small {
+  display: block;
+  margin: 7px 0 0;
+  color: #718096;
+  font-size: 12px;
+}
+
+.doctor-details-muted {
+  color: #8290a4;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.doctor-location-list,
+.doctor-source-list {
+  display: grid;
+  gap: 14px;
+}
+
+.doctor-location-item,
+.doctor-source-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 18px;
+  border: 1px solid #e4eaf3;
+  border-radius: 11px;
+  background: #fbfcff;
+}
+
+.doctor-location-item h3,
+.doctor-source-item h3 {
+  margin: 0 0 9px;
+  color: #23446f;
+  font-size: 15px;
+}
+
+.doctor-location-item p,
+.doctor-source-item p {
+  margin: 5px 0;
+  color: #6d7d93;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.doctor-source-item small {
+  display: block;
+  margin-top: 9px;
+  color: #8290a4;
+}
+
+.doctor-source-item a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  color: #2863b6;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.doctor-primary-label {
+  display: inline-block;
+  margin-left: 9px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background: #e7f0ff;
+  color: #2863b6;
+  font-size: 10px;
+}
+
+.doctor-location-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.doctor-location-actions button,
+.doctor-review-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 15px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.doctor-verify-small,
+.doctor-verify-button {
+  background: #16834a;
+  color: #ffffff;
+}
+
+.doctor-reject-small,
+.doctor-reject-button {
+  background: #fff0f0;
+  color: #b42318;
+}
+
+.doctor-delete-button {
+  background: #26364c;
+  color: #ffffff;
+}
+
+.doctor-location-actions button:hover,
+.doctor-review-actions button:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.97);
+}
+
+.doctor-review-actions-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.doctor-review-actions-card h2 {
+  margin: 0 0 8px;
+  color: #18365f;
+  font-size: 20px;
+}
+
+.doctor-review-actions-card p {
+  max-width: 620px;
+  margin: 0;
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.doctor-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.doctor-review-actions button:disabled,
+.doctor-location-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.doctor-verification-warning {
+  width: 100%;
+  color: #a16a00 !important;
+  font-weight: 700;
+}
+
+.doctor-details-alert,
+.admin-doctor-details-error {
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #b42318;
+}
+
+.admin-doctor-details-message {
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #63758d;
+}
+
+.admin-doctor-details-error button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2459a6;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.doctor-spin {
+  animation: doctorSpin 1.2s linear infinite;
+}
+
+@keyframes doctorSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.doctor-details-footer {
+  padding: 10px 0 25px;
+}
+
+.doctor-details-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #2863b6;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+@media (max-width: 850px) {
+  .doctor-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .doctor-review-actions-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-doctor-details-page {
+    padding: 25px 4%;
+  }
+
+  .admin-doctor-details-heading h1 {
+    font-size: 25px;
+  }
+
+  .doctor-details-card {
+    padding: 19px;
+  }
+
+  .doctor-profile-top {
+    align-items: flex-start;
+  }
+
+  .doctor-profile-avatar {
+    width: 65px;
+    height: 65px;
+  }
+
+  .doctor-profile-heading h2 {
+    font-size: 19px;
+  }
+
+  .doctor-details-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .doctor-location-item,
+  .doctor-source-item {
+    flex-direction: column;
+  }
+
+  .doctor-location-actions,
+  .doctor-review-actions {
+    width: 100%;
+  }
+
+  .doctor-location-actions button,
+  .doctor-review-actions button {
+    flex: 1;
+  }
+}

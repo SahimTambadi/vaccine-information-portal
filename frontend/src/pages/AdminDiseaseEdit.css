@@ -1,0 +1,405 @@
+
+/* =========================================
+   VAXCARE - ADMIN DISEASE EDIT
+========================================= */
+
+.admin-disease-edit-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 35px 6%;
+  background: #f5f8fc;
+  color: #172b4d;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.admin-disease-edit-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  padding: 45px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #082c57, #087b9e);
+  color: #ffffff;
+}
+
+.admin-disease-edit-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #0797b5;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.admin-disease-edit-hero .admin-disease-edit-eyebrow {
+  color: #a9e8f5;
+}
+
+.admin-disease-edit-hero h1 {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 800;
+}
+
+.admin-disease-edit-hero h1 span {
+  color: #70e0ef;
+}
+
+.admin-disease-edit-hero p {
+  max-width: 650px;
+  margin: 0;
+  color: #dcecf7;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.admin-disease-edit-hero-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 45px;
+}
+
+/* =========================================
+   BACK NAVIGATION
+========================================= */
+
+.admin-disease-edit-back {
+  margin-bottom: 22px;
+}
+
+.admin-disease-edit-back a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #087b9e;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-disease-edit-back a:hover {
+  color: #064d70;
+}
+
+/* =========================================
+   FORM CONTAINER
+========================================= */
+
+.admin-disease-form-container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 35px;
+  border: 1px solid #e3eaf2;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 30px rgba(20, 50, 80, 0.06);
+}
+
+/* =========================================
+   FORM HEADING
+========================================= */
+
+.admin-disease-form-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 25px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e8edf3;
+}
+
+.admin-disease-form-heading h2 {
+  margin: 0 0 9px;
+  color: #102d4f;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.admin-disease-form-heading p {
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.admin-disease-pending-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #f3d79a;
+  border-radius: 30px;
+  background: #fff8e8;
+  color: #946200;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================
+   FORM SECTIONS
+========================================= */
+
+.admin-disease-form-section {
+  padding: 25px 0;
+  border-bottom: 1px solid #e8edf3;
+}
+
+.admin-disease-form-section h3 {
+  margin: 0 0 22px;
+  color: #10365b;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.admin-disease-source-note {
+  margin: -8px 0 22px;
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   FORM GROUPS
+========================================= */
+
+.admin-disease-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 22px;
+}
+
+.admin-disease-form-group:last-child {
+  margin-bottom: 0;
+}
+
+.admin-disease-form-group label {
+  color: #263f5d;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.required-star {
+  color: #dc3545;
+}
+
+.admin-disease-form-group input,
+.admin-disease-form-group textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #d8e1eb;
+  border-radius: 9px;
+  outline: none;
+  background: #fbfdff;
+  color: #183451;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-disease-form-group input {
+  min-height: 48px;
+}
+
+.admin-disease-form-group textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.admin-disease-form-group input::placeholder,
+.admin-disease-form-group textarea::placeholder {
+  color: #a0adba;
+}
+
+.admin-disease-form-group input:focus,
+.admin-disease-form-group textarea:focus {
+  border-color: #0797b5;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(7, 151, 181, 0.1);
+}
+
+/* =========================================
+   REVIEW NOTICE
+========================================= */
+
+.admin-disease-review-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 19px;
+  margin-top: 28px;
+  border: 1px solid #c9e7f1;
+  border-radius: 12px;
+  background: #effaff;
+  color: #087b9e;
+}
+
+.admin-disease-review-notice svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.admin-disease-review-notice strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #075578;
+  font-size: 14px;
+}
+
+.admin-disease-review-notice p {
+  margin: 0;
+  color: #456b80;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   ERROR AND SUCCESS MESSAGES
+========================================= */
+
+.admin-disease-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  margin-top: 20px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admin-disease-error {
+  border: 1px solid #f2c5c5;
+  background: #fff1f1;
+  color: #b42318;
+}
+
+.admin-disease-success {
+  border: 1px solid #b8e5ca;
+  background: #edfff3;
+  color: #187443;
+}
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.admin-disease-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 13px;
+  padding-top: 28px;
+}
+
+.admin-disease-cancel-button,
+.admin-disease-save-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  min-height: 47px;
+  padding: 12px 23px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-disease-cancel-button {
+  border: 1px solid #d7e0ea;
+  background: #ffffff;
+  color: #43566c;
+}
+
+.admin-disease-cancel-button:hover {
+  background: #f2f6fa;
+}
+
+.admin-disease-save-button {
+  border: none;
+  background: #087b9e;
+  color: #ffffff;
+}
+
+.admin-disease-save-button:hover:not(:disabled) {
+  background: #065e7d;
+  transform: translateY(-1px);
+}
+
+.admin-disease-save-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 768px) {
+  .admin-disease-edit-page {
+    padding: 22px 4%;
+  }
+
+  .admin-disease-edit-hero {
+    padding: 30px 24px;
+  }
+
+  .admin-disease-edit-hero-icon {
+    width: 75px;
+    height: 75px;
+    font-size: 35px;
+  }
+
+  .admin-disease-form-container {
+    padding: 24px 20px;
+  }
+
+  .admin-disease-form-heading {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-disease-edit-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-disease-edit-hero-icon {
+    display: none;
+  }
+
+  .admin-disease-form-container {
+    padding: 20px 15px;
+  }
+
+  .admin-disease-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .admin-disease-cancel-button,
+  .admin-disease-save-button {
+    width: 100%;
+  }
+}

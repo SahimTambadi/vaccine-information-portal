@@ -1,8 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { supabase } from "../lib/supabaseClient";
+import "./AuthRequiredModal.css";
 
 function MainLayout() {
   const [user, setUser] = useState(null);
@@ -50,10 +50,10 @@ function MainLayout() {
 
     const target = event.target;
 
-    // Allow Login and Sign Up navigation.
+    // Allow login, signup, popup and global search interactions.
     if (
       target.closest?.(
-        'a[href="/login"], a[href="/signup"], .auth-required-modal'
+        'a[href="/login"], a[href="/signup"], .auth-required-modal, .global-search'
       )
     ) {
       return;
@@ -68,36 +68,82 @@ function MainLayout() {
   return (
     <div onClickCapture={handleProtectedClick}>
       <Navbar />
+
       <Outlet />
 
       {showLoginPrompt && (
-        <div className="auth-required-overlay">
+        <div
+          className="auth-required-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowLoginPrompt(false);
+            }
+          }}
+        >
           <div className="auth-required-modal">
-            <div className="auth-required-icon">🔒</div>
+            <button
+              className="auth-modal-close"
+              onClick={() => setShowLoginPrompt(false)}
+              aria-label="Close popup"
+            >
+              ×
+            </button>
 
-            <h2>Login Required</h2>
+            <div className="auth-modal-visual">
+              <div className="auth-visual-circle">
+                <span>✚</span>
+              </div>
 
-            <p>
-              Please log in or create an account to interact
-              with VaxCare and access its features.
-            </p>
-
-            <div className="auth-required-buttons">
-              <Link to="/login" className="nav-button">
-                Login
-              </Link>
-
-              <Link to="/signup" className="auth-signup-button">
-                Sign Up
-              </Link>
+              <div className="auth-visual-shield">
+                <span>✓</span>
+              </div>
             </div>
 
-            <button
-              className="auth-close-button"
-              onClick={() => setShowLoginPrompt(false)}
-            >
-              Maybe Later
-            </button>
+            <div className="auth-modal-content">
+              <span className="auth-modal-tag">
+                WELCOME TO VAXCARE
+              </span>
+
+              <h2>
+                Your Health Journey
+                <span> Starts Here.</span>
+              </h2>
+
+              <p>
+                Create your account or log in to explore
+                VaxCare's healthcare information and
+                personalized features.
+              </p>
+
+              <div className="auth-required-buttons">
+                <Link
+                  to="/login"
+                  className="auth-login-button"
+                >
+                  Login
+                  <span>→</span>
+                </Link>
+
+                <Link
+                  to="/signup"
+                  className="auth-signup-button"
+                >
+                  Create Account
+                </Link>
+              </div>
+
+              <button
+                className="auth-maybe-later"
+                onClick={() => setShowLoginPrompt(false)}
+              >
+                Maybe Later
+              </button>
+
+              <div className="auth-modal-footer">
+                <span>✚</span>
+                Your health information, made accessible.
+              </div>
+            </div>
           </div>
         </div>
       )}

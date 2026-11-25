@@ -1,0 +1,404 @@
+
+/* =========================================
+   VAXCARE - ADMIN ADD DOCTOR
+========================================= */
+
+.admin-doctor-edit-page {
+  min-height: 100vh;
+  background: #f3f6fc;
+  color: #17345c;
+  font-family: "Inter", sans-serif;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.admin-doctor-edit-hero {
+  padding: 55px 8%;
+  background: linear-gradient(120deg, #102d59, #176b87);
+  color: #ffffff;
+}
+
+.admin-doctor-edit-hero > span {
+  display: inline-block;
+  margin-bottom: 13px;
+  color: #a9e5ee;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.admin-doctor-edit-hero h1 {
+  margin: 0 0 12px;
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.admin-doctor-edit-hero p {
+  max-width: 650px;
+  margin: 0;
+  color: #dce8f7;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.admin-doctor-edit-content {
+  width: 84%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 0 60px;
+}
+
+/* =========================================
+   BREADCRUMB
+========================================= */
+
+.admin-doctor-edit-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 25px;
+  color: #94a1b5;
+  font-size: 12px;
+}
+
+.admin-doctor-edit-breadcrumb a {
+  color: #176b87;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin-doctor-edit-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.admin-doctor-edit-breadcrumb strong {
+  color: #294568;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.admin-doctor-edit-error {
+  margin-bottom: 22px;
+  padding: 16px 19px;
+  border: 1px solid #f0c5c5;
+  border-radius: 10px;
+  background: #fff1f1;
+  color: #a83232;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.admin-doctor-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+}
+
+/* =========================================
+   FORM SECTIONS
+========================================= */
+
+.admin-doctor-edit-section {
+  padding: 28px;
+  border: 1px solid #e5ebf4;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 5px 18px rgba(23, 52, 91, 0.04);
+}
+
+.admin-doctor-edit-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 26px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.admin-doctor-edit-section-heading > span {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #e8f4f8;
+  color: #176b87;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-doctor-edit-section-heading h2 {
+  margin: 0 0 7px;
+  color: #17345c;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.admin-doctor-edit-section-heading p {
+  margin: 0;
+  color: #8794a8;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.admin-doctor-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 21px;
+}
+
+.admin-doctor-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #354f72;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 0;
+}
+
+.admin-doctor-edit-field.full {
+  grid-column: 1 / -1;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.admin-doctor-edit-field input,
+.admin-doctor-edit-field select,
+.admin-doctor-edit-field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid #dce5f0;
+  border-radius: 9px;
+  outline: none;
+  background: #fbfcfe;
+  color: #203d63;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-doctor-edit-field input {
+  height: 46px;
+}
+
+.admin-doctor-edit-field select {
+  min-height: 46px;
+  cursor: pointer;
+}
+
+.admin-doctor-edit-field textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.admin-doctor-edit-field input::placeholder,
+.admin-doctor-edit-field textarea::placeholder {
+  color: #a3afbf;
+}
+
+.admin-doctor-edit-field input:focus,
+.admin-doctor-edit-field select:focus,
+.admin-doctor-edit-field textarea:focus {
+  border-color: #176b87;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(23, 107, 135, 0.09);
+}
+
+.admin-doctor-edit-field small {
+  color: #8a98ab;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* =========================================
+   MULTI SELECT
+========================================= */
+
+.admin-doctor-edit-field select[multiple] {
+  min-height: 125px;
+  padding: 9px;
+}
+
+.admin-doctor-edit-field select[multiple] option {
+  padding: 9px;
+  border-radius: 5px;
+}
+
+.admin-doctor-edit-field select[multiple] option:checked {
+  background: #176b87 linear-gradient(#176b87, #176b87);
+  color: #ffffff;
+}
+
+.admin-doctor-edit-hint {
+  margin: 14px 0 0;
+  padding: 13px 15px;
+  border-radius: 9px;
+  background: #f3f7fc;
+  color: #73849c;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   REVIEW NOTICE
+========================================= */
+
+.admin-doctor-edit-notice {
+  padding: 20px 22px;
+  border: 1px solid #e8d9ad;
+  border-radius: 11px;
+  background: #fff9e9;
+}
+
+.admin-doctor-edit-notice strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #906512;
+  font-size: 14px;
+}
+
+.admin-doctor-edit-notice p {
+  margin: 0;
+  color: #806e49;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.admin-doctor-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+  padding-top: 5px;
+}
+
+.admin-doctor-edit-cancel,
+.admin-doctor-edit-submit {
+  min-width: 135px;
+  min-height: 45px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-doctor-edit-cancel {
+  border: 1px solid #d7e0ed;
+  background: #ffffff;
+  color: #536a89;
+}
+
+.admin-doctor-edit-cancel:hover {
+  background: #edf3f9;
+}
+
+.admin-doctor-edit-submit {
+  border: 1px solid #176b87;
+  background: #176b87;
+  color: #ffffff;
+}
+
+.admin-doctor-edit-submit:hover:not(:disabled) {
+  background: #12566e;
+  border-color: #12566e;
+  transform: translateY(-2px);
+}
+
+.admin-doctor-edit-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 850px) {
+  .admin-doctor-edit-content {
+    width: 90%;
+  }
+
+  .admin-doctor-edit-section {
+    padding: 23px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-doctor-edit-hero {
+    padding: 42px 6%;
+  }
+
+  .admin-doctor-edit-hero h1 {
+    font-size: 30px;
+  }
+
+  .admin-doctor-edit-content {
+    width: 92%;
+    padding-top: 22px;
+  }
+
+  .admin-doctor-edit-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .admin-doctor-edit-field.full {
+    grid-column: auto;
+  }
+
+  .admin-doctor-edit-section {
+    padding: 19px;
+  }
+
+  .admin-doctor-edit-section-heading h2 {
+    font-size: 17px;
+  }
+
+  .admin-doctor-edit-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .admin-doctor-edit-cancel,
+  .admin-doctor-edit-submit {
+    width: 100%;
+  }
+}

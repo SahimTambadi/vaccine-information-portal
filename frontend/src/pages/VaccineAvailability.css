@@ -1,0 +1,385 @@
+
+/* =========================================
+   VAXCARE - VACCINE AVAILABILITY
+========================================= */
+
+.vaccine-availability-section {
+  width: 100%;
+  margin: 40px auto;
+  padding: 35px;
+  background: #ffffff;
+  border: 1px solid #e4eaf2;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(25, 50, 90, 0.05);
+  box-sizing: border-box;
+}
+
+.vaccine-availability-heading {
+  margin-bottom: 26px;
+}
+
+.availability-eyebrow {
+  color: #16856a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.vaccine-availability-heading h2 {
+  margin: 10px 0;
+  color: #172b4d;
+  font-size: 27px;
+}
+
+.vaccine-availability-heading p {
+  color: #64748b;
+  line-height: 1.7;
+}
+
+/* SEARCH */
+
+.availability-search-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.availability-pincode-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.availability-pincode-field label {
+  display: block;
+  margin-bottom: 9px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.availability-pincode-field input {
+  width: 100%;
+  min-height: 47px;
+  padding: 0 14px;
+  border: 1px solid #d7e0ec;
+  border-radius: 9px;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.availability-pincode-field input:focus {
+  border-color: #16856a;
+  box-shadow: 0 0 0 3px rgba(22, 133, 106, 0.1);
+}
+
+.availability-search-button,
+.availability-location-button {
+  min-height: 47px;
+  padding: 0 19px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.availability-search-button {
+  background: #087f68;
+  color: #ffffff;
+}
+
+.availability-search-button:hover {
+  background: #066b58;
+}
+
+.availability-location-button {
+  background: #edf5ff;
+  color: #245a91;
+}
+
+.availability-location-button:hover {
+  background: #dcecff;
+}
+
+.availability-search-button:disabled,
+.availability-location-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.availability-privacy-note {
+  margin-top: 12px;
+  color: #8190a5;
+  font-size: 12px;
+}
+
+/* MESSAGES */
+
+.availability-error {
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  background: #fff1f2;
+  color: #b42318;
+  font-size: 14px;
+}
+
+.availability-loading,
+.availability-initial-message,
+.availability-empty {
+  margin-top: 25px;
+  padding: 30px 20px;
+  border: 1px dashed #d7e0ec;
+  border-radius: 12px;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.availability-initial-message span,
+.availability-empty span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+
+.availability-initial-message p,
+.availability-empty p {
+  max-width: 600px;
+  margin: auto;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.availability-empty h3 {
+  color: #243b53;
+}
+
+/* RESULTS */
+
+.availability-results {
+  margin-top: 30px;
+}
+
+.availability-results-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.availability-results-heading h3 {
+  margin: 0;
+  color: #172b4d;
+  font-size: 19px;
+}
+
+.availability-results-heading span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.availability-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.availability-centre-card {
+  padding: 22px;
+  border: 1px solid #e2eaf2;
+  border-radius: 13px;
+  background: #ffffff;
+  transition: box-shadow 0.2s ease;
+}
+
+.availability-centre-card:hover {
+  box-shadow: 0 8px 22px rgba(25, 50, 90, 0.07);
+}
+
+.availability-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.availability-centre-label {
+  color: #16856a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.9px;
+}
+
+.availability-card-top h3 {
+  margin: 7px 0;
+  color: #172b4d;
+  font-size: 18px;
+}
+
+.availability-hospital-name {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.availability-status {
+  padding: 6px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.availability-status.available {
+  background: #e5f7ee;
+  color: #147d4c;
+}
+
+.availability-status.limited {
+  background: #fff4db;
+  color: #986600;
+}
+
+.availability-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.availability-address p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.availability-distance {
+  margin: 12px 0;
+  color: #245a91;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* PRICE DETAILS */
+
+.availability-price-area {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f5f8fc;
+}
+
+.availability-price-area > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.availability-price-area > div:last-child {
+  margin-bottom: 0;
+}
+
+.availability-price-area span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.availability-price-area strong {
+  color: #243b53;
+  font-size: 13px;
+  text-align: right;
+}
+
+.availability-total-price {
+  padding-top: 12px;
+  border-top: 1px solid #dce5ef;
+}
+
+.availability-total-price strong {
+  color: #087f68;
+  font-size: 17px;
+}
+
+.availability-stock {
+  margin-top: 14px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.availability-updated {
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px solid #edf1f5;
+  color: #8190a5;
+  font-size: 11px;
+}
+
+.availability-disclaimer {
+  margin-top: 25px;
+  padding: 13px 15px;
+  border-left: 3px solid #d9a441;
+  background: #fffbeb;
+  color: #795b18;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .vaccine-availability-section {
+    padding: 23px 17px;
+  }
+
+  .availability-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .availability-search-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .availability-pincode-field {
+    width: 100%;
+  }
+
+  .availability-search-button,
+  .availability-location-button {
+    width: 100%;
+  }
+
+  .availability-results-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .vaccine-availability-heading h2 {
+    font-size: 22px;
+  }
+
+  .availability-card-top {
+    flex-direction: column;
+  }
+
+  .availability-price-area > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .availability-price-area strong {
+    text-align: left;
+  }
+}

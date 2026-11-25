@@ -1,0 +1,765 @@
+
+/* =========================================
+   VAXCARE - DISEASE IMPORT CENTRE
+   Professional Admin Interface
+========================================= */
+
+.disease-import-page {
+  min-height: 100vh;
+  padding: 34px 5%;
+  background: #f3f6fc;
+  color: #172b4d;
+  font-family: "Inter", sans-serif;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.disease-import-header {
+  margin-bottom: 32px;
+}
+
+.disease-import-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+  color: #94a0b2;
+  font-size: 12px;
+}
+
+.disease-import-breadcrumb a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.disease-import-breadcrumb a:hover {
+  color: #0d9488;
+}
+
+.disease-import-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.disease-import-eyebrow {
+  margin-bottom: 10px;
+  color: #0d9488;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.disease-import-header h1 {
+  margin: 0;
+  color: #082b60;
+  font-size: clamp(30px, 4vw, 43px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.disease-import-header h1 span {
+  color: #2563eb;
+}
+
+.disease-import-description {
+  max-width: 680px;
+  margin-top: 12px;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.disease-import-back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 18px;
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid #dce5f2;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.disease-import-back-button:hover {
+  background: #eff5ff;
+  border-color: #b9d0ff;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   SUMMARY CARDS
+========================================= */
+
+.disease-import-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.disease-import-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #e6edf6;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(20, 50, 90, 0.035);
+  transition: 0.2s ease;
+}
+
+.disease-import-summary-item:hover {
+  border-color: #cbdcf5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(20, 50, 90, 0.06);
+}
+
+.disease-import-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 49px;
+  height: 49px;
+  flex-shrink: 0;
+  background: #eaf1ff;
+  border-radius: 13px;
+  color: #2563eb;
+}
+
+.disease-import-summary-icon.imported {
+  background: #e8f8ef;
+  color: #16834c;
+}
+
+.disease-import-summary-icon.available {
+  background: #e7f8f6;
+  color: #0d9488;
+}
+
+.disease-import-summary-item strong {
+  display: block;
+  color: #082b60;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.disease-import-summary-item div span {
+  display: block;
+  margin-top: 5px;
+  color: #8390a4;
+  font-size: 12px;
+}
+
+/* =========================================
+   MAIN CATALOGUE
+========================================= */
+
+.disease-import-catalogue {
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e6edf6;
+  border-radius: 18px;
+  box-shadow: 0 5px 25px rgba(20, 50, 90, 0.04);
+}
+
+.disease-import-catalogue-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.disease-import-catalogue-heading h2 {
+  margin: 0;
+  color: #082b60;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.disease-import-catalogue-heading p {
+  margin-top: 8px;
+  color: #8793a5;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.disease-import-catalogue-count {
+  padding: 8px 13px;
+  background: #edf4ff;
+  color: #2563eb;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.disease-import-toolbar {
+  margin-bottom: 25px;
+}
+
+.disease-import-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 49px;
+  padding: 0 16px;
+  background: #fbfcfe;
+  border: 1px solid #e0e8f2;
+  border-radius: 11px;
+  color: #8a9bb2;
+  transition: 0.2s ease;
+}
+
+.disease-import-search:focus-within {
+  background: #ffffff;
+  border-color: #7ba6f8;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.disease-import-search input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #172b4d;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.disease-import-search input::placeholder {
+  color: #a0adbd;
+}
+
+/* =========================================
+   CATEGORY FILTERS
+========================================= */
+
+.disease-import-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 17px;
+}
+
+.disease-import-filters button {
+  padding: 9px 15px;
+  background: #ffffff;
+  border: 1px solid #e2eaf4;
+  border-radius: 22px;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.disease-import-filters button:hover:not(.active) {
+  background: #eff5ff;
+  border-color: #c6d9ff;
+  color: #2563eb;
+}
+
+.disease-import-filters button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 3px 9px rgba(37, 99, 235, 0.17);
+}
+
+/* =========================================
+   FEEDBACK MESSAGES
+========================================= */
+
+.disease-import-feedback {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 21px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.disease-import-feedback p {
+  flex: 1;
+  margin: 0;
+}
+
+.disease-import-feedback.success {
+  background: #ecfdf5;
+  border: 1px solid #c8f0dc;
+  color: #047857;
+}
+
+.disease-import-feedback.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.disease-import-feedback.info {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  color: #1d4ed8;
+}
+
+.disease-import-feedback button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.disease-import-feedback button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   DISEASE GRID
+========================================= */
+
+.disease-import-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* =========================================
+   DISEASE CARD
+========================================= */
+
+.disease-import-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 21px;
+  background: #ffffff;
+  border: 1px solid #e7edf5;
+  border-radius: 15px;
+  transition: 0.25s ease;
+}
+
+.disease-import-card:hover {
+  border-color: #b9d0ff;
+  box-shadow: 0 9px 25px rgba(37, 99, 235, 0.075);
+  transform: translateY(-3px);
+}
+
+.disease-import-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.disease-import-disease-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #e9f1ff, #e7f8f6);
+  border-radius: 13px;
+  color: #2563eb;
+}
+
+.disease-import-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.disease-import-status.available {
+  background: #eaf2ff;
+  color: #2563eb;
+}
+
+.disease-import-status.imported {
+  background: #e8f8ef;
+  color: #16834c;
+}
+
+.disease-import-card h3 {
+  margin: 18px 0 7px;
+  color: #082b60;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.disease-import-category {
+  margin: 0;
+  color: #0d9488;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.disease-import-description-card {
+  min-height: 65px;
+  margin: 13px 0 16px;
+  color: #718096;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+/* =========================================
+   SOURCE REFERENCES
+========================================= */
+
+.disease-import-source-info {
+  padding: 14px;
+  margin-top: auto;
+  background: #f7f9fc;
+  border: 1px solid #edf1f6;
+  border-radius: 10px;
+}
+
+.disease-import-source-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 11px;
+  color: #0d9488;
+}
+
+.disease-import-source-heading span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.disease-import-source-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #e9eef5;
+  color: #53647c;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  transition: 0.2s ease;
+}
+
+.disease-import-source-link:hover {
+  color: #2563eb;
+}
+
+.disease-import-source-link svg {
+  flex-shrink: 0;
+}
+
+/* =========================================
+   REVIEW NOTE
+========================================= */
+
+.disease-import-review-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 15px 0;
+  color: #8995a7;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.disease-import-review-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #d49a28;
+}
+
+/* =========================================
+   IMPORT BUTTON
+========================================= */
+
+.disease-import-card-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 13px;
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  border-radius: 9px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.disease-import-card-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.17);
+}
+
+.disease-import-card-button.imported {
+  background: #e8f8ef;
+  border-color: #c9ecd7;
+  color: #16834c;
+  cursor: default;
+}
+
+.disease-import-card-button:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   LOADING AND EMPTY STATES
+========================================= */
+
+.disease-import-loading,
+.disease-import-empty {
+  padding: 55px 20px;
+  text-align: center;
+  color: #8190a5;
+}
+
+.disease-import-loading {
+  font-size: 13px;
+}
+
+.disease-import-empty svg {
+  color: #a5b4c8;
+}
+
+.disease-import-empty h3 {
+  margin: 14px 0 7px;
+  color: #082b60;
+  font-size: 18px;
+}
+
+.disease-import-empty p {
+  color: #8793a5;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   SOURCE INFORMATION NOTE
+========================================= */
+
+.disease-import-source-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 17px;
+  margin-top: 27px;
+  background: #eff7ff;
+  border: 1px solid #dfedff;
+  border-radius: 11px;
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.disease-import-source-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #2563eb;
+}
+
+.disease-import-source-note p {
+  margin: 0;
+}
+
+.disease-import-source-note strong {
+  color: #082b60;
+}
+
+/* =========================================
+   BOTTOM MANUAL ENTRY SECTION
+========================================= */
+
+.disease-import-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 24px;
+  margin-top: 25px;
+  background: #ffffff;
+  border: 1px solid #e6edf6;
+  border-radius: 14px;
+}
+
+.disease-import-bottom h3 {
+  margin: 0;
+  color: #082b60;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.disease-import-bottom p {
+  margin-top: 7px;
+  color: #8491a3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.disease-import-bottom a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 17px;
+  background: #eaf2ff;
+  border: 1px solid #dce9ff;
+  border-radius: 9px;
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.disease-import-bottom a:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+/* =========================================
+   TABLET RESPONSIVE
+========================================= */
+
+@media (max-width: 1050px) {
+  .disease-import-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+  .disease-import-page {
+    padding: 23px 16px;
+  }
+
+  .disease-import-header-content,
+  .disease-import-catalogue-heading,
+  .disease-import-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .disease-import-back-button {
+    width: fit-content;
+  }
+
+  .disease-import-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .disease-import-summary-item {
+    padding: 17px;
+  }
+
+  .disease-import-catalogue {
+    padding: 18px;
+  }
+
+  .disease-import-catalogue-heading h2 {
+    font-size: 21px;
+  }
+
+  .disease-import-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .disease-import-description-card {
+    min-height: auto;
+  }
+
+  .disease-import-bottom {
+    padding: 19px;
+  }
+
+  .disease-import-bottom a {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+  .disease-import-header h1 {
+    font-size: 29px;
+  }
+
+  .disease-import-filters {
+    gap: 7px;
+  }
+
+  .disease-import-filters button {
+    padding: 8px 11px;
+    font-size: 10px;
+  }
+
+  .disease-import-catalogue {
+    padding: 14px;
+  }
+
+  .disease-import-card {
+    padding: 16px;
+  }
+
+  .disease-import-status {
+    font-size: 8px;
+    padding: 6px 8px;
+  }
+}

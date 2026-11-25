@@ -1,0 +1,483 @@
+
+.hospital-details-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f4f7fc;
+  color: #172b4d;
+}
+
+/* BACK LINK */
+
+.hospital-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 25px;
+  color: #2878b9;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.hospital-back-link:hover {
+  color: #104f83;
+}
+
+/* PROFILE HEADER */
+
+.hospital-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 30px;
+  margin-bottom: 25px;
+  background: #ffffff;
+  border: 1px solid #e5ebf3;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(30, 55, 90, 0.045);
+}
+
+.hospital-profile-logo {
+  display: flex;
+  flex: 0 0 105px;
+  align-items: center;
+  justify-content: center;
+  width: 105px;
+  height: 105px;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #edf5ff;
+  color: #2878b9;
+}
+
+.hospital-profile-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hospital-profile-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.hospital-profile-type {
+  display: inline-flex;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  background: #eaf3ff;
+  color: #1769aa;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hospital-profile-heading h1 {
+  margin: 0 0 10px;
+  color: #1b3454;
+  font-size: 29px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.hospital-profile-heading p {
+  max-width: 850px;
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* OVERVIEW */
+
+.hospital-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.hospital-overview-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 19px;
+  background: #ffffff;
+  border: 1px solid #e5ebf3;
+  border-radius: 12px;
+}
+
+.hospital-overview-card > svg {
+  flex-shrink: 0;
+  color: #2878b9;
+}
+
+.hospital-overview-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.hospital-overview-card span {
+  color: #8795a8;
+  font-size: 12px;
+}
+
+.hospital-overview-card strong,
+.hospital-overview-card a {
+  color: #263b59;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.hospital-overview-card a:hover {
+  color: #2878b9;
+}
+
+/* SECTIONS */
+
+.hospital-details-section {
+  padding: 25px;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid #e5ebf3;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(30, 55, 90, 0.035);
+}
+
+.hospital-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-bottom: 17px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.hospital-section-heading svg {
+  flex-shrink: 0;
+  color: #2878b9;
+}
+
+.hospital-section-heading h2 {
+  margin: 0;
+  color: #203653;
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.hospital-section-empty {
+  margin: 0;
+  color: #8795a8;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* TAGS */
+
+.hospital-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hospital-tag-list span {
+  display: inline-flex;
+  padding: 9px 14px;
+  border: 1px solid #dceaf8;
+  border-radius: 8px;
+  background: #f2f7fd;
+  color: #35658f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* SPECIALIZATIONS */
+
+.hospital-specialization-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.hospital-specialization-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 15px;
+  border: 1px solid #e5ebf3;
+  border-radius: 10px;
+  background: #fbfcfe;
+}
+
+.hospital-specialization-card > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #2878b9;
+}
+
+.hospital-specialization-card strong {
+  color: #304761;
+  font-size: 14px;
+}
+
+.hospital-specialization-card p {
+  margin: 6px 0 0;
+  color: #8290a3;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* LOCATIONS */
+
+.hospital-location-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.hospital-location-card {
+  padding: 19px;
+  border: 1px solid #e5ebf3;
+  border-radius: 11px;
+  background: #fbfcfe;
+}
+
+.hospital-location-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-bottom: 14px;
+}
+
+.hospital-location-title > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #2878b9;
+}
+
+.hospital-location-title h3 {
+  margin: 0 0 7px;
+  color: #263b59;
+  font-size: 16px;
+}
+
+.hospital-primary-label {
+  display: inline-flex;
+  padding: 4px 9px;
+  border-radius: 15px;
+  background: #e8f7ef;
+  color: #218052;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.hospital-location-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0 0 15px;
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.hospital-location-address svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #8295aa;
+}
+
+.hospital-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #2878b9;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hospital-map-link:hover {
+  color: #104f83;
+}
+
+/* DOCTORS */
+
+.hospital-doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.hospital-doctor-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 18px;
+  border: 1px solid #e5ebf3;
+  border-radius: 11px;
+  background: #fbfcfe;
+}
+
+.hospital-doctor-avatar {
+  display: flex;
+  flex: 0 0 65px;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #eaf3ff;
+  color: #2878b9;
+}
+
+.hospital-doctor-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hospital-doctor-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.hospital-doctor-info h3 {
+  margin: 0;
+  color: #263b59;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.hospital-doctor-info p {
+  margin: 0;
+  color: #718096;
+  font-size: 13px;
+}
+
+.hospital-doctor-info > span {
+  color: #2878b9;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.hospital-doctor-info small {
+  color: #8795a8;
+  font-size: 12px;
+}
+
+.hospital-doctor-link {
+  display: inline-flex;
+  margin-top: 7px;
+  color: #1769aa;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hospital-doctor-link:hover {
+  color: #104f83;
+  text-decoration: underline;
+}
+
+/* LOADING AND ERROR */
+
+.hospital-details-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 55vh;
+  padding: 30px;
+  text-align: center;
+  color: #8290a3;
+}
+
+.hospital-details-state p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.hospital-details-state h2 {
+  margin: 13px 0 0;
+  color: #263b59;
+  font-size: 20px;
+}
+
+.hospital-details-error svg {
+  color: #d97757;
+}
+
+.hospital-loading-icon {
+  color: #2878b9;
+  animation: hospital-spin 1s linear infinite;
+}
+
+@keyframes hospital-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+  .hospital-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hospital-specialization-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .hospital-details-page {
+    padding: 25px 4%;
+  }
+
+  .hospital-profile-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 22px;
+  }
+
+  .hospital-profile-heading h1 {
+    font-size: 24px;
+  }
+
+  .hospital-overview-grid,
+  .hospital-location-grid,
+  .hospital-doctors-grid,
+  .hospital-specialization-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hospital-details-section {
+    padding: 19px;
+  }
+
+  .hospital-section-heading h2 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 450px) {
+  .hospital-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hospital-doctor-card {
+    flex-direction: column;
+  }
+}
